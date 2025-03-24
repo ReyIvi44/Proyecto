@@ -2,15 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Registro</title>
+    <title>Inicio de Sesión</title>
     <% include header %>
   </head>
   <body>
     <div class="cuadrado">
         <div class="form-container">
-            <h2 style="text-align: center;">Registro</h2>
+            <h2 style="text-align: center;">Inicio de Sesión</h2>
             <h1></h1>
-            <form action="/registro" method="POST">
+            <form action="/iniciosesion" method="POST">
                 <div class="input-group" style="margin-bottom: 10px">
                     <label style= "display: block" for="nombre">Nombre</label>
                     <input style="width: 150%; max-width: 400px;" type="nombre" id="nombre" name="nombre" required>
@@ -36,7 +36,7 @@
                     <input style="width: 150%; max-width: 400px;" type="confirmar-contraseña" id="confirmar-contraseña" name="confirmar-contraseña" required>
                 </div>
                 <div class="registrarse">
-                <button type="submit" class="submit-btn">Registrarse</button>
+                <button type="submit" class="submit-btn">Iniciar Sesión</button>
                 </div>
             </form>
             <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>

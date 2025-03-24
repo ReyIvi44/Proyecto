@@ -14,6 +14,7 @@ var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
 //Nuevo
 var registroRouter = require('./routes/registro');
+var iniciosesionRouter = require('./routes/iniciosesion');
 
 var flash = require('connect-flash'); //p
 const passport = require("./passport/setup"); //p
@@ -63,6 +64,7 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 //Nuevo
 app.use('/registro', registroRouter);
+app.use('/iniciosesion', iniciosesionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
