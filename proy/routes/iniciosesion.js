@@ -1,18 +1,22 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 const passport = require("passport");
 
-// Definir las rutas aquí
-router.get('/', (req, res) => {
-  res.render('iniciosesion.ejs', {
-  });
-});
+/* GET users listing. */
+	
+	// login view
+	router.get('/', (req, res) => {
+		res.render('iniciosesion', {
+			//message: req.flash('loginMessage')
+      message:""
+		});
+	});
 
-router.post('/', passport.authenticate('local-login', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
+	router.post('/', passport.authenticate('local-iniciosesion', {
+		successRedirect: '/',
+		failureRedirect: '/iniciosesion',
+		failureFlash: true
+	}));
 
 
 module.exports = router;
