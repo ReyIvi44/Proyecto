@@ -18,6 +18,7 @@ const LocalStrategy = require("passport-local").Strategy;
     });
   });
 
+  //REGISTRO
   // Signup
   passport.use('local-signup', new LocalStrategy({
     // by default, local strategy uses username and password, we will override with email
@@ -46,8 +47,12 @@ const LocalStrategy = require("passport-local").Strategy;
     }).catch((err) => {
       return done(err);
     });
+    console.log("Datos recibidos en registro:", req.body);
   }));
 
+
+
+  //INICIO DE SESION
   // login
   // we are using named strategies since we have one for login and one for signup
   // by default, if there was no name, it would just be called 'local
