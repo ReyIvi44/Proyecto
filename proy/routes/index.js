@@ -18,7 +18,7 @@ function isLoggedIn (req, res, next) {
 /* GET home page. */
 router.get('/', isLoggedIn, async(req, res, next) =>{
   personajes = await Personaje.find();
-  res.render('index', { title: 'Starwars page', personajes, user: req.user });  
+  res.render('index', { title: 'Guadaway', personajes, user: req.user });  
 });
 
 /* */
