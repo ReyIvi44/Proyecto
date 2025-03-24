@@ -12,6 +12,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
+//Nuevo
+var registroRouter = require('./routes/registro');
 
 var flash = require('connect-flash'); //p
 const passport = require("./passport/setup"); //p
@@ -59,6 +61,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
+//Nuevo
+app.use('/registro', registroRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
