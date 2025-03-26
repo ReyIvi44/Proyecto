@@ -7,19 +7,13 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 Personaje = mongoose.model('Personaje');
 
-function isLoggedIn (req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/iniciosesion');
-}
-
 
 /* GET home page. */
-router.get('/', isLoggedIn, async(req, res, next) =>{
+router.get('/', async(req, res, next) =>{
   personajes = await Personaje.find();
-  res.render('index', { title: 'Guadaway', personajes, user: req.user });  
+  res.render('index', { title: 'Guadaway', personajes, user: req.user});
 });
+
 
 /* */
  router.post('/', async (req, res, next) =>  {

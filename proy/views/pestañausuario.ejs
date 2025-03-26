@@ -1,0 +1,52 @@
+<!-- Botón de Usuario a la derecha de la pantalla --> 
+<div style="margin-left: 1522px;"class="circle-img" onclick="toggleDropdown()">
+    <img src="/images/usuario.jpg">
+</div>
+<div id="dropdown" class="dropdown-content">
+    <!-- Imagen del usuario en el centro -->
+    <div class="user-image">
+        <img src="/images/usuario.jpg" alt="Usuario">
+    </div>
+
+    <% if (user) { %>
+        <h4 style="text-align: center;">
+          <%= user.name %>, <%= user.surname %> (<%= user.email %>)
+        </h4>
+    <% } %>
+    
+    <!-- Botones de Iniciar sesión y Registrar sesión -->
+    <div class="buttons">
+        <button onclick="window.location.href='/iniciosesion'">Iniciar sesión</button>
+        <button onclick="window.location.href='/registro'">Registrar sesión</button>
+    </div>
+
+    <!-- Botón de Cerrar sesión -->
+    <div class="logout-button">
+        <button onclick="window.location.href='/logout'">Cerrar sesión</button>
+    </div>
+</div>
+
+  
+<script>
+    function toggleDropdown() {
+        let dropdown = document.getElementById("dropdown");
+        let titulo = document.getElementById("titulo-principal");
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+            titulo.style.display = "block";
+        } else {
+            dropdown.style.display = "block";
+            titulo.style.display = "none"; 
+        }
+    }
+    document.addEventListener("click", function (event) {
+    let dropdown = document.getElementById("dropdown");
+    let circleImg = document.querySelector(".circle-img");
+    let titulo = document.getElementById("titulo-principal");
+
+    if (!dropdown.contains(event.target) && !circleImg.contains(event.target)) {
+      dropdown.style.display = "none";
+      titulo.style.display = "block";
+    }
+  });
+  </script>

@@ -21,10 +21,10 @@ const passport = require("./passport/setup"); //p
 const session = require("express-session");  //p
 const MongoStore = require("connect-mongo")(session); //p
 
-var app = express();
+const app = express();
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/starwars')
+mongoose.connect('mongodb://localhost:27017/Guadaway')
     .then(() => console.log('Connected to MongoDB.'))
     .catch(err => console.error('Could not connect to MongoDB.', err))
 
@@ -57,6 +57,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
