@@ -108,3 +108,12 @@ router.get('/', async(req, res, next) =>{
 
 
 module.exports = router;
+
+router.get("/logout", (req, res) => {
+  req.logout(function (err) {
+      if (err) { return next(err); }
+      res.redirect("/"); // Redirige a la página de inicio
+  });
+});
+
+module.exports = router;

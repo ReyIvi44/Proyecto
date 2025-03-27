@@ -7,7 +7,9 @@
     <div class="user-image">
         <img src="/images/usuario.jpg" alt="Usuario">
     </div>
-
+    <% if (!user) { %> 
+    <p style="text-align: center;" class="username"><%="Invitado" %></p>
+    <% } %>
     <% if (user) { %>
         <h4 style="text-align: center;">
           <%= user.name %>, <%= user.surname %> (<%= user.email %>)
@@ -16,13 +18,17 @@
     
     <!-- Botones de Iniciar sesión y Registrar sesión -->
     <div class="buttons">
+        <% if (!user) { %> 
         <button onclick="window.location.href='/iniciosesion'">Iniciar sesión</button>
         <button onclick="window.location.href='/registro'">Registrar sesión</button>
+        <% } %>
     </div>
 
     <!-- Botón de Cerrar sesión -->
     <div class="logout-button">
+        <% if (user) { %>
         <button onclick="window.location.href='/logout'">Cerrar sesión</button>
+        <% } %>
     </div>
 </div>
 
