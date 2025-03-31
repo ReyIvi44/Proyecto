@@ -64,61 +64,17 @@ router.get('/', async(req, res, next) =>{
       }));
   });
 
-/*{ 
-  "type": "FeatureCollection",
-  "reature": [
+  const Ruta = require('../models/ruta');  // Modelo de ruta
 
-{
-  "type": "Feature",
-  "id":"",
-  "geometry": {
-    "type": "Linestring",
-    "coordinates": [
-     [100.0, 0.0],
-     [101.0, 1.0]
-   ]
-  },
-  "properties": {
-    "nombre": "C3PO",
-    "fuerza": "15",
-    "faccion": "Rebeldes"
-  }
-}]} 
-  */
-
- /* router.get('/geojson', async (req, res, next) => {
-    var personajes = await Personaje.find();
-    var geojson_response = {type: "FeatureCollection", features: []};
-    personajes.forEach(function(personaje) {
-
-      if (personaje.geo.coordinates == null) personaje.geo = null;
-      
-      var geojson_feature = {
-        type : "Feature",
-        id: personaje._id,
-        properties : {nombre: personaje.Nombre, fuerza: personaje.Fuerza, faccion: personaje.Faccion},
-        geometry : personaje.geo
-      }
-      geojson_response.features.push(geojson_feature);
-    });
-    res.json(geojson_response);
-
-    
+  // Esta en el index porque hace referencia a los datos de los popups de cada ruta en el mapa principal 
+  router.get('/geojson', async (req, res) => {
+    try {
+      const rutas = await Ruta.find();
+      res.json(rutas);  // Devuelve las rutas como respuesta JSON
+    } catch (error) {
+      res.status(500).send('Error al obtener las rutas');
+    }
   });
-*/
-
-
-const Ruta = require('../models/ruta');  // Modelo de ruta
-
-// Ruta para obtener todas las rutas en formato GeoJSON
-router.get('/geojson', async (req, res) => {
-  try {
-    const rutas = await Ruta.find();
-    res.json(rutas);  // Devuelve las rutas como respuesta JSON
-  } catch (error) {
-    res.status(500).send('Error al obtener las rutas');
-  }
-});
 
 module.exports = router;
 
