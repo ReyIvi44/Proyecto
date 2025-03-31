@@ -7,7 +7,7 @@
       $( document ).ready(function(){
         $('#registrar').on('submit', function (event) {
           event.preventDefault();
-          var randomGeoPoints = generateRandomPoints({ 'lat': 40.416, 'lng': -3.703 }, 5000, 1);
+          var randomGeoPoints = generateRandomPoints({ 'lat': 40.790, 'lng': -4.010 }, 5000, 1);
           randomGeoPoints = generateRandomPoints({'lat': randomGeoPoints[0][1], 'lng': randomGeoPoints[0][0]}, 1000, 5);
           url = $(this).attr("action");
           var postData = $(this).serializeArray();
@@ -23,17 +23,17 @@
           });          
         });
         //Aqui ocurre la referenciacion a id="map" que vemos al final del documento 
-        var map = L.map('map').setView([40.43, -3.71], 13);
+        var map = L.map('map').setView([40.790, -4.010], 13);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map)
 
         var myStyle = {
-          "color": "#0000ff",
-          "weight": 4,
-          "opacity": 0.65
-      };
+        "color": "#FF0000",  // Color rojo
+        "weight": 8,         // Aumenta la anchura de la línea
+        "opacity": 0.8       // Opacidad
+    };
       
       /* Invocamos una petición ajax para recuperar el geojson 
       *  una vez descargado creamos una capa geojson de leaflet y 
@@ -43,7 +43,7 @@
             L.geoJson(data, {
                 style: myStyle,
                 onEachFeature: function(feature, layer){ 
-                  layer.bindPopup("<strong>"+feature.properties.nombre+"</strong><br/>Fuerza: "+feature.properties.fuerza);
+                  layer.bindPopup("<strong>"+feature.properties.Name+"</strong><br/>Fuerza: "+feature.properties.description);
                 }
             }).addTo(map);
         });

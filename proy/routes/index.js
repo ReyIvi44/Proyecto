@@ -86,7 +86,7 @@ router.get('/', async(req, res, next) =>{
 }]} 
   */
 
-  router.get('/geojson', async (req, res, next) => {
+ /* router.get('/geojson', async (req, res, next) => {
     var personajes = await Personaje.find();
     var geojson_response = {type: "FeatureCollection", features: []};
     personajes.forEach(function(personaje) {
@@ -105,7 +105,22 @@ router.get('/', async(req, res, next) =>{
 
     
   });
+*/
 
+
+
+
+const Ruta = require('../models/ruta');  // Modelo de ruta
+
+// Ruta para obtener todas las rutas en formato GeoJSON
+router.get('/geojson', async (req, res) => {
+  try {
+    const rutas = await Ruta.find();
+    res.json(rutas);  // Devuelve las rutas como respuesta JSON
+  } catch (error) {
+    res.status(500).send('Error al obtener las rutas');
+  }
+});
 
 module.exports = router;
 
@@ -117,3 +132,4 @@ router.get("/logout", (req, res) => {
 });
 
 module.exports = router;
+
