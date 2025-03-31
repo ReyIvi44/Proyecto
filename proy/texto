@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= ruta.Name %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1><%= ruta.Name %></h1>
+    </header>
+    
+    <section id="ruta-info">
+        <h2>Información de la Ruta</h2>
+        <p><strong>Descripción:</strong> <%= ruta.descripcion %></p>
+        
+        <!-- Aquí puedes incluir la tabla con los detalles de la ruta -->
+        <center>
+            <table class="styled-table">
+                <tr><th>Parque Nacional</th><td><%= ruta['Parque Nacional'] %></td></tr>
+                <tr><th>Nombre</th><td><%= ruta.Nombre %></td></tr>
+                <tr><th>Número</th><td><%= ruta.Número %></td></tr>
+                <tr><th>Tipo</th><td><%= ruta.Tipo %></td></tr>
+                <tr><th>Sentido</th><td><%= ruta.Sentido %></td></tr>
+                <tr><th>Dificultad</th><td><%= ruta.Dificultad %></td></tr>
+                <tr><th>Duración (h)</th><td><%= ruta['Duración (h)'] %></td></tr>
+                <tr><th>Longitud (km)</th><td><%= ruta['Longitud (km)'] %></td></tr>
+                <tr><th>Recomendaciones</th><td><%= ruta.Recomendaciones %></td></tr>
+            </table>
+        </center>
+    </section>
+
+    <footer>
+        <p>© 2025 Información de Rutas</p>
+    </footer>
+</body>
+</html>

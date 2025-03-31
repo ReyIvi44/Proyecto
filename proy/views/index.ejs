@@ -39,15 +39,45 @@
       *  una vez descargado creamos una capa geojson de leaflet y 
       *  la añadimos al mapa 
       */ 
-        $.getJSON("/geojson", function(data) {
-            L.geoJson(data, {
-                style: myStyle,
-                onEachFeature: function(feature, layer){ 
-                  layer.bindPopup("<strong>"+feature.properties.Name+"</strong><br/>Fuerza: "+feature.properties.description);
-                }
-            }).addTo(map);
+      $.getJSON("/geojson", function(data) {
+      L.geoJson(data, {
+          style: myStyle,
+          onEachFeature: function(feature, layer) {
+              // Generar la tabla con los atributos
+              var tableHtml = "<center><table class='styled-table' style='width:100%; border-collapse: collapse;'><tr><th colspan='2' align='center'><em>Atributos</em></th></tr>";
+              
+              // Crear las filas de la tabla basadas en las propiedades del objeto
+              tableHtml += generateTableRow('Parque Nacional', feature.properties['Parque Nacional']);
+              tableHtml += generateTableRow('Nombre', feature.properties['Nombre']);
+              tableHtml += generateTableRow('Número', feature.properties['Número']);
+              tableHtml += generateTableRow('Tipo', feature.properties['Tipo']);
+              tableHtml += generateTableRow('Sentido', feature.properties['Sentido']);
+              tableHtml += generateTableRow('Dificultad', feature.properties['Dificultad']);
+              tableHtml += generateTableRow('Duración (h)', feature.properties['Duración (h)']);
+              tableHtml += generateTableRow('Longitud (km)', feature.properties['Longitud (km)']);
+              tableHtml += generateTableRow('Recomendaciones', feature.properties['Recomendaciones']);
+              tableHtml += generateTableRow('Recomendaciones', feature.properties['Name']);
+              
+              // Crear fila con el enlace a la página específica de la ruta
+              const rutaName = feature.properties['Name'];  // Usamos Name como identificador
+              const rutaUrl = `/rutaespecifica/${encodeURIComponent(rutaName)}`; // URL con Name dinámico
+
+              tableHtml += generateTableRow('Ver más información', `<a href="${rutaUrl}" target="_blank">Ver ruta completa</a>`);
+
+              
+              tableHtml += "</table></center>";
+
+              // Enlace al popup con la tabla generada
+              layer.bindPopup("<strong>" + feature.properties.Name + "</strong><br/>" + tableHtml);
+          }
+      }).addTo(map);
+    });
+
+    // Función para generar filas de la tabla
+    function generateTableRow(label, value) {
+      return "<tr><th style='padding: 8px; text-align: left;'>" + label + "</th><td style='padding: 8px;'>" + value + "</td></tr>";
+    }
         });
-      });
 
 
     </script> 

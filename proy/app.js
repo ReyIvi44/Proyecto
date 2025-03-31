@@ -15,6 +15,8 @@ var signupRouter = require('./routes/signup');
 //Nuevo
 var registroRouter = require('./routes/registro');
 var iniciosesionRouter = require('./routes/iniciosesion');
+var rutasRouter = require('./routes/lasrutas');
+
 
 var flash = require('connect-flash'); //p
 const passport = require("./passport/setup"); //p
@@ -22,7 +24,6 @@ const session = require("express-session");  //p
 const MongoStore = require("connect-mongo")(session); //p
 
 const app = express();
-const rutasRoutes = require('./routes/index.js');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/Guadaway')
@@ -67,7 +68,9 @@ app.use('/signup', signupRouter);
 //Nuevo
 app.use('/registro', registroRouter);
 app.use('/iniciosesion', iniciosesionRouter);
-app.use('/caminos', rutasRoutes);
+app.use('/', rutasRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -87,3 +90,6 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
+

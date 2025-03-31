@@ -81,5 +81,24 @@ a {
   margin-top: 270px;
 }
 
+/*Tabla del popup de rutas*/
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.styled-table tr:nth-child(even) {
+  background-color: #E3E3F3;  /* Gris claro */
+}
+
+.styled-table tr:nth-child(odd) {
+  background-color: #FFFFFF;  /* Blanco */
+}
+
 
 

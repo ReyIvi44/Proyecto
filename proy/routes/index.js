@@ -108,8 +108,6 @@ router.get('/', async(req, res, next) =>{
 */
 
 
-
-
 const Ruta = require('../models/ruta');  // Modelo de ruta
 
 // Ruta para obtener todas las rutas en formato GeoJSON
