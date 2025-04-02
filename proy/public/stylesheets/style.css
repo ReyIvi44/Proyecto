@@ -102,3 +102,80 @@ a {
 
 
 
+
+
+
+
+
+
+
+
+/*Estilos de sidebar preguntas frecuentes*/
+.header1 {
+  position: fixed;
+  top: 0;
+  background: white; /* Fondo blanco */
+  padding: 15px 20px;
+  z-index: 10; /* Para que esté por encima del contenido */
+  width: 80%;	
+}
+
+.container {
+  display: flex;
+  margin-left: 0px;
+  margin-bottom: 200px;
+
+}
+.container1 {
+  display: flex;
+  margin-left: 0px;
+  margin-top: 100px;
+  height: 25vh;
+  position: fixed;
+}
+
+.content-wrapper {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  margin-left: 400px;
+  margin-top: 50px;
+  padding-left: 50px;
+  scroll-margin-top: 150px;
+}
+
+/* Panel lateral */
+.sidebar {
+  width: 250px;
+  background: #f4f4f4;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  margin-right: 100px;
+  position: fixed;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+  color: #007bff;
+}
+
+/* Agregar un espaciador que compense la altura del encabezado */
+h2 {
+  scroll-margin-top: 150px; /* Ajuste según el tamaño de tu encabezado */
+}
+
+

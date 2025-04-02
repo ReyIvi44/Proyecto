@@ -16,6 +16,7 @@ var signupRouter = require('./routes/signup');
 var registroRouter = require('./routes/registro');
 var iniciosesionRouter = require('./routes/iniciosesion');
 var rutasRouter = require('./routes/lasrutas');
+var frecuentesRouter = require('./routes/frecuentes');
 
 
 var flash = require('connect-flash'); //p
@@ -69,6 +70,7 @@ app.use('/signup', signupRouter);
 app.use('/registro', registroRouter);
 app.use('/iniciosesion', iniciosesionRouter);
 app.use('/', rutasRouter);
+app.use('/frecuentes', frecuentesRouter);
 
 
 
