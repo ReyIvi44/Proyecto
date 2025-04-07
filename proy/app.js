@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const cors = require('cors');
+
 
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger_output.json')
@@ -25,6 +27,8 @@ const session = require("express-session");  //p
 const MongoStore = require("connect-mongo")(session); //p
 
 const app = express();
+
+app.use(cors());
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/Guadaway')
@@ -92,6 +96,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
-
-
 

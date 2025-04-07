@@ -15,7 +15,13 @@
     <p><strong>Longitud:</strong> <%= ruta.features[0].properties["Longitud (km)"] %> km</p>
     <p><strong>Recomendaciones:</strong> <%= ruta.features[0].properties.Recomendaciones %></p>
     <p><strong>Descripción:</strong> <%= ruta.features[0].properties.Descripción %></p>
-
+    <div class="imagenes">
+        <!-- Imagen 1 -->
+        <img src="/images/rutas/<%= ruta.name%>1.jpg" alt="Imagen 1 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid">
+        
+        <!-- Imagen 2 -->
+        <img src="/images/rutas/<%= ruta.name%>2.jpg" alt="Imagen 2 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid">
+      </div>
 
     <a href="/">Volver al mapa</a>
 

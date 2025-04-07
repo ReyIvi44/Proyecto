@@ -76,3 +76,56 @@ router.get('/rutaespecifica/:name', async (req, res) => {
   }
 });
 module.exports = router;
+
+router.get('/rutaespecifica', async (req, res) => {
+  try {
+    const rutaName = req.query.Buscar;  // Obtenemos el nombre de la ruta desde la query
+
+    if (!rutaName) {
+      return res.status(400).send('Por favor ingrese un nombre de ruta');
+    }
+
+    const ruta = await Ruta.findOne({ "features.properties.Nombre": new RegExp(rutaName, 'i') }); // Usamos una expresión regular para hacer la búsqueda insensible a mayúsculas
+
+    if (!ruta) {
+      return res.status(404).send('Ruta no encontrada');
+    }
+
+    // Renderizar la página de la ruta específica
+    res.render('rutaespecifica', { ruta: ruta });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener la ruta');
+  }
+});
+module.exports = router;
+
+
+router.get('/autocomplete', async (req, res) => {
+  try {
+    // Desactivar la caché
+    res.set('Cache-Control', 'no-store');
+
+    const query = req.query.query;
+
+    // Buscar las rutas que coincidan con el término de búsqueda
+    const rutas = await Ruta.find({
+      "features.properties.Nombre": { $regex: query, $options: 'i' } // Buscar ignorando mayúsculas/minúsculas
+    });
+
+    // Extraer solo los nombres y otros detalles relevantes
+    const resultado = rutas.map(ruta => ({
+      Nombre: ruta.features[0].properties.Nombre,
+      Dificultad: ruta.features[0].properties.Dificultad,
+      "Duración (h)": ruta.features[0].properties["Duración (h)"],
+    }));
+
+    res.json(resultado); // Devolver los resultados como JSON
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener las rutas');
+  }
+});
+
+module.exports = router;
+
