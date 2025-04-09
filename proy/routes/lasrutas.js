@@ -56,12 +56,14 @@ router.get('/geojson', async (req, res) => {
 
 module.exports = router; // Exportamos el router para que app.js lo use
 
-
+/*Rutas para el Ver mas información*/ 
 // Ruta para mostrar la página específica de la ruta
+
+//BIEN
 router.get('/rutaespecifica/:name', async (req, res) => {
   try {
     // Buscar la ruta usando el nombre de la ruta
-    const rutaName = req.params.name;
+    const rutaName = decodeURIComponent(req.params.name);
     const ruta = await Ruta.findOne({ "features.properties.Name": rutaName });
 
     if (!ruta) {
@@ -77,6 +79,7 @@ router.get('/rutaespecifica/:name', async (req, res) => {
 });
 module.exports = router;
 
+//BIEN
 router.get('/rutaespecifica', async (req, res) => {
   try {
     const rutaName = req.query.Buscar;  // Obtenemos el nombre de la ruta desde la query
@@ -101,31 +104,34 @@ router.get('/rutaespecifica', async (req, res) => {
 module.exports = router;
 
 
+/*Rutas para la busqueda de rutas en la pantalla*/ 
 router.get('/autocomplete', async (req, res) => {
   try {
-    // Desactivar la caché
     res.set('Cache-Control', 'no-store');
-
     const query = req.query.query;
 
-    // Buscar las rutas que coincidan con el término de búsqueda
     const rutas = await Ruta.find({
-      "features.properties.Nombre": { $regex: query, $options: 'i' } // Buscar ignorando mayúsculas/minúsculas
+      "features.properties.Nombre": { $regex: query, $options: 'i' }
     });
 
-    // Extraer solo los nombres y otros detalles relevantes
-    const resultado = rutas.map(ruta => ({
-      Nombre: ruta.features[0].properties.Nombre,
-      Dificultad: ruta.features[0].properties.Dificultad,
-      "Duración (h)": ruta.features[0].properties["Duración (h)"],
-    }));
+    let resultado = [];
 
-    res.json(resultado); // Devolver los resultados como JSON
+    rutas.forEach(ruta => {
+      ruta.features.forEach(feature => {
+        if (feature.properties.Nombre.toLowerCase().includes(query.toLowerCase())) {
+          resultado.push({
+            Nombre: feature.properties.Nombre,
+            Dificultad: feature.properties.Dificultad,
+            "Duración (h)": feature.properties["Duración (h)"],
+          });
+        }
+      });
+    });
+
+    res.json(resultado);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al obtener las rutas');
   }
 });
-
 module.exports = router;
-

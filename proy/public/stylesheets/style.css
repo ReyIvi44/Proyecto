@@ -173,4 +173,23 @@ a {
   margin-bottom: 1.5rem;
 }
 
+/*Estilo imagenes rutaespecifica.ejs*/
+.imagenes{
+  display: flex; /* Para alinear las imágenes en una fila */
+    justify-content: center; /* Centrar las imágenes */
+    gap: 20px; /* Espacio entre imágenes */
+    margin-top: 20px;
+}
+
+.imagenes img{
+  width: 45%;
+  height: auto;
+}
+
+.titulorutas{
+  text-align: center; /* Centra el título */
+  font-size: 3rem; /* Hace el título más grande */
+  margin-top: 20px; /* Un poco de espacio arriba */
+}
+
 

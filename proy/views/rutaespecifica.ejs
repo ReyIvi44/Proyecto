@@ -6,23 +6,20 @@
     <title><%= ruta.features[0].properties["Nombre"] %></title>
     <link rel="stylesheet" href="/styles.css">
 </head>
-<body>    
-    <h1><%= ruta.features[0].properties["Nombre"] %></h1>
-    
+<body>
+    <h1 class="titulorutas"><%= ruta.features[0].properties["Nombre"] %></h1>
     <p><strong>Parque Nacional:</strong> <%= ruta.features[0].properties["Parque Nacional"] %></p>
     <p><strong>Dificultad:</strong> <%= ruta.features[0].properties.Dificultad %></p>
     <p><strong>Duración:</strong> <%= ruta.features[0].properties["Duración (h)"] %> horas</p>
-    <p><strong>Longitud:</strong> <%= ruta.features[0].properties["Longitud (km)"] %> km</p>
-    <p><strong>Recomendaciones:</strong> <%= ruta.features[0].properties.Recomendaciones %></p>
-    <p><strong>Descripción:</strong> <%= ruta.features[0].properties.Descripción %></p>
     <div class="imagenes">
         <!-- Imagen 1 -->
         <img src="/images/rutas/<%= ruta.name%>1.jpg" alt="Imagen 1 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid">
-        
+
         <!-- Imagen 2 -->
         <img src="/images/rutas/<%= ruta.name%>2.jpg" alt="Imagen 2 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid">
-      </div>
-
+    </div>
+    <p><strong>Descripción:</strong> <%= ruta.features[0].properties.Descripción %></p>
+    <p><strong>Recomendaciones:</strong> <%= ruta.features[0].properties.Recomendaciones %></p>
     <a href="/">Volver al mapa</a>
 
     <footer>

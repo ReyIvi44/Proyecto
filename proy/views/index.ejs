@@ -121,35 +121,49 @@
       </div>
     </form>
     
-    <script>
-      $(document).ready(function() {
-        $('#search-input').typeahead({
-          source: function(query, process) {
-            $.get('/autocomplete', { query: query }, function(data) {
-              process(data); // Muestra los resultados devueltos
-            });
-          },
-          display: function(item) {
-            return item.Nombre; // El texto que se muestra en el autocompletado
-          },
-          afterSelect: function(item) {
-            // Redirige a la ruta específica al seleccionar una opción
-            window.location.href = '/rutaespecifica/' + item.Nombre;
-          },
-          items: 10,  // Número de sugerencias
-          minLength: 3,  // Mínimo de caracteres para activar la búsqueda
-          highlighter: function(item) {
-            // Personalización del formato de los resultados en el autocompletado
-            var resultado = '<div>';
-            resultado += '<strong>' + item.Nombre + '</strong>';
-            resultado += '<p>Dificultad: ' + item.Dificultad + ' | Duración: ' + item["Duración (h)"] + ' horas</p>';
-            resultado += '</div>';
-            return resultado;
-          }
+    <div id="sugerencias"></div>
+
+<script>
+    const buscador = document.getElementById("search-input");
+    const sugerenciasDiv = document.getElementById("sugerencias");
+
+    buscador.addEventListener("input", async function() {
+      const texto = this.value.toLowerCase();
+      sugerenciasDiv.innerHTML = "";  // Limpiar las sugerencias previas
+
+      // No hacer nada si el campo está vacío
+      if (texto.length === 0) {
+        return;
+      }
+
+      try {
+        // Hacer la solicitud al servidor para obtener las rutas que coinciden con el texto
+        const res = await fetch(`/autocomplete?query=${encodeURIComponent(texto)}`);
+        const resultados = await res.json();
+
+        // Mostrar las sugerencias (máximo 5)
+        resultados.slice(0, 5).forEach(ruta => {
+          const div = document.createElement("div");
+          div.innerHTML = `<strong>${ruta.Nombre}</strong> - Dificultad: ${ruta.Dificultad} - Duración: ${ruta["Duración (h)"]}h`;
+          div.classList.add("sugerencia-item");
+
+          // Cuando se haga clic en una sugerencia, redirigir a la página de la ruta
+          div.addEventListener("click", function() {
+          // Asegurarse de que el nombre de la ruta tiene el formato correcto (utilizar encodeURIComponent)
+          const nombreRuta = encodeURIComponent(ruta.Nombre);  // Asegúrate de que esta variable tenga el formato correcto
+
+          // Redirigir a la página específica de la ruta
+          window.location.href = `/rutaespecifica/${nombreRuta}`;
         });
-      });
-    </script>
-    
+
+          sugerenciasDiv.appendChild(div);
+        });
+
+      } catch (error) {
+        console.error("Error al buscar rutas:", error);
+      }
+    });
+</script>
 
   <!-- Filtros, todavia faltan por referenciarlos y crear los que faltan, espaciado, BASE DE DATOS-->
     <div class="form-group">
