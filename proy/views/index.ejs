@@ -75,7 +75,7 @@
               tableHtml += generateTableRow('Recomendaciones', feature.properties['Recomendaciones']);
               
               // Crear fila con el enlace a la página específica de la ruta
-              const rutaName = feature.properties['Name'];  // Usamos Name como identificador
+              const rutaName = feature.properties['Nombre'];  // Usamos Name como identificador
               const rutaUrl = `/rutaespecifica/${encodeURIComponent(rutaName)}`; // URL con Name dinámico
 
               tableHtml += generateTableRow('Ver más información', `<a href="${rutaUrl}" target="_blank">Ver ruta completa</a>`);

@@ -62,22 +62,21 @@ module.exports = router; // Exportamos el router para que app.js lo use
 //BIEN
 router.get('/rutaespecifica/:name', async (req, res) => {
   try {
-    // Buscar la ruta usando el nombre de la ruta
     const rutaName = decodeURIComponent(req.params.name);
-    const ruta = await Ruta.findOne({ "features.properties.Name": rutaName });
+    const ruta = await Ruta.findOne({
+      "features.properties.Nombre": new RegExp(`^${rutaName}$`, 'i') // insensible a mayúsculas
+    });
 
     if (!ruta) {
       return res.status(404).send('Ruta no encontrada');
     }
 
-    // Renderizar la página de la ruta específica con los datos
-    res.render('rutaespecifica', { ruta: ruta });
+    res.render('rutaespecifica', { ruta });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al obtener la ruta');
   }
 });
-module.exports = router;
 
 //BIEN
 router.get('/rutaespecifica', async (req, res) => {
@@ -112,26 +111,31 @@ router.get('/autocomplete', async (req, res) => {
 
     const rutas = await Ruta.find({
       "features.properties.Nombre": { $regex: query, $options: 'i' }
-    });
+    }).limit(5); // Limitar a 5 sugerencias
 
     let resultado = [];
 
     rutas.forEach(ruta => {
-      ruta.features.forEach(feature => {
-        if (feature.properties.Nombre.toLowerCase().includes(query.toLowerCase())) {
-          resultado.push({
-            Nombre: feature.properties.Nombre,
-            Dificultad: feature.properties.Dificultad,
-            "Duración (h)": feature.properties["Duración (h)"],
-          });
-        }
-      });
+      if (Array.isArray(ruta.features)) {
+        ruta.features.forEach(feature => {
+          if (
+            feature.properties &&
+            feature.properties.Nombre &&
+            feature.properties.Nombre.toLowerCase().includes(query.toLowerCase())
+          ) {
+            resultado.push({
+              Nombre: feature.properties.Nombre,
+              Dificultad: feature.properties.Dificultad,
+              "Duración (h)": feature.properties["Duración (h)"]
+            });
+          }
+        });
+      }
     });
 
-    res.json(resultado);
+    res.json(resultado.slice(0, 5)); // También asegúrate de devolver solo 5 resultados
   } catch (error) {
-    console.error(error);
+    console.error("Error en /autocomplete:", error);
     res.status(500).send('Error al obtener las rutas');
   }
 });
-module.exports = router;
