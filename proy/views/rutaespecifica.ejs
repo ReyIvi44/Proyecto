@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= ruta.features[0].properties["Nombre"] %></title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
     <h1 class="titulorutas"><%= ruta.features[0].properties["Nombre"] %></h1>
@@ -20,6 +22,57 @@
     </div>
     <p><strong>Descripción:</strong> <%= ruta.features[0].properties.Descripción %></p>
     <p><strong>Recomendaciones:</strong> <%= ruta.features[0].properties.Recomendaciones %></p>
+
+
+    <div id="mapaRuta" style="height: 500px; margin-top: 20px;"></div>
+    <script>
+    // Espera a que la página cargue
+    document.addEventListener("DOMContentLoaded", function () {
+        const mapa = L.map("mapaRuta").setView([40.4, -3.7], 10); // Coordenadas genéricas
+
+        // Capa base
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        }).addTo(mapa);
+
+        // Obtener datos de la ruta desde el backend
+        const ruta = <%- JSON.stringify(ruta) %>;
+
+        // Mostrar cada geometría en el mapa
+        ruta.features.forEach(feature => {
+        const geojson = L.geoJSON(feature, {
+            style: function(feature) {
+            // Obtener la dificultad de la ruta
+            const dificultad = feature.properties.Dificultad;
+            let color;
+
+            // Asignar colores según la dificultad
+            switch(dificultad) {
+                case "Baja":
+                    color = "#00FF00"; // Verde
+                    break;
+                case "Media":
+                    color = "#FFA500"; // Naranja
+                    break;
+                case "Alta":
+                    color = "#FF0000"; // Rojo
+                    break;
+            }
+
+            return {
+                color: color,
+                weight: 3,
+                opacity: 1
+            };
+          },
+        }).addTo(mapa);
+
+        // Ajustar la vista a la ruta
+        mapa.fitBounds(geojson.getBounds());
+        });
+    });
+    </script>
+
     <a href="/">Volver al mapa</a>
 
     <footer>
