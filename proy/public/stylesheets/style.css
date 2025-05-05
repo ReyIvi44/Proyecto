@@ -192,4 +192,15 @@ a {
   margin-top: 20px; /* Un poco de espacio arriba */
 }
 
+.leaflet-bottom.leaflet-right .leaflet-control {
+  display: flex;
+  flex-direction: row; /* en lugar de columna */
+  align-items: center;
+  gap: 5px; /* separación entre botones */
+}
+.leaflet-control-zoom,
+.leaflet-control-fullscreen {
+  margin-bottom: 0 !important; /* elimina el espacio vertical */
+}
+
 
