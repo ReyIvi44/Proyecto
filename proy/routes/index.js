@@ -66,15 +66,55 @@ router.get('/', async(req, res, next) =>{
 
   const Ruta = require('../models/ruta');  // Modelo de ruta
 
-  // Esta en el index porque hace referencia a los datos de los popups de cada ruta en el mapa principal 
-  router.get('/geojson', async (req, res) => {
+// Esta en el index porque hace referencia a los datos de los popups de cada ruta en el mapa principal 
+router.get('/geojson', async (req, res) => {
+  try {
+    const rutas = await Ruta.find();
+    res.json(rutas);  // Devuelve las rutas como respuesta JSON
+  } catch (error) {
+    res.status(500).send('Error al obtener las rutas');
+  }
+});
+module.exports = router;
+
+router.get('/filtrar-rutas', async (req, res) => {
+  const { maxDuracion, minDuracion, maxDistancia, minDistancia, dificultad, sentido } = req.query;
+
+  const condiciones = {}; // esto está bien, es un objeto
+
+  if (minDuracion && maxDuracion) {
+    condiciones['properties.Duración (h)'] = {
+      $gte: parseFloat(minDuracion),
+      $lte: parseFloat(maxDuracion)
+    };
+  }
+  if (minDistancia && maxDistancia) {
+    condiciones['properties.Longitud (km)'] = {
+      $gte: parseFloat(minDistancia),
+      $lte: parseFloat(maxDistancia)
+    };
+  }
+  if (dificultad) {
+    condiciones['properties.Dificultad'] = dificultad;
+  }
+  if (sentido) {
+    condiciones['properties.Sentido'] = sentido;
+  }
+  console.log('Condiciones de filtrado:', condiciones);
     try {
-      const rutas = await Ruta.find();
-      res.json(rutas);  // Devuelve las rutas como respuesta JSON
-    } catch (error) {
-      res.status(500).send('Error al obtener las rutas');
-    }
-  });
+    const rutas = await Ruta.find({
+      features: {
+        $elemMatch: condiciones
+      }
+    });
+
+    console.log("Rutas encontradas:", rutas.length);
+    res.json(rutas);
+  } catch (error) {
+    console.error("Error al filtrar rutas:", error);
+    res.status(500).send("Error al filtrar rutas");
+  }
+});
 
 module.exports = router;
 

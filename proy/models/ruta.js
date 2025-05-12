@@ -13,8 +13,8 @@ const featureSchema = new mongoose.Schema({
     Tipo: String,
     Sentido: String,
     Dificultad: String,
-    "Duración (h)": String,
-    "Longitud (km)": String,
+    "Duración (h)": Number,
+    "Longitud (km)": Number,
     Recomendaciones: String,
     Descripción: String
   },

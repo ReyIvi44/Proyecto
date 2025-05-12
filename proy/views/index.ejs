@@ -3,159 +3,18 @@
   <% include header %>
   <body>
     <script src="/javascripts/randompoints.js"></script>
-    <script>
-      $( document ).ready(function(){
-        $('#registrar').on('submit', function (event) {
-          event.preventDefault();
-          var randomGeoPoints = generateRandomPoints({ 'lat': 40.790, 'lng': -4.010 }, 5000, 1);
-          randomGeoPoints = generateRandomPoints({'lat': randomGeoPoints[0][1], 'lng': randomGeoPoints[0][0]}, 1000, 5);
-          url = $(this).attr("action");
-          var postData = $(this).serializeArray();
-          postData.push({ name: 'ruta', value: JSON.stringify(randomGeoPoints) });
-          console.log (JSON.stringify(postData));
-          $.ajax({
-            type: "POST",
-            url: url,
-            data: postData,
-            success: function () {
-              location.reload();
-            }
-          });          
-        });
-        //Aqui ocurre la referenciacion a id="map" que vemos al final del documento 
-        var map = L.map('map', {
-        fullscreenControl: true,
-        fullscreenControlOptions: {
-          title: {
-            'false': 'Ver en pantalla completa',
-            'true': 'Salir de pantalla completa'
-          },
-          position: 'bottomright'
-        }
-        }).setView([40.790, -4.010], 13);
-        L.control.scale({
-        }).addTo(map);
-        map.addControl(new L.Control.Coordinates({
-          position: "bottomleft",
-          decimals: 5,
-          decimalSeperator: ".",
-          labelTemplateLat: "Lat: {y}",
-          labelTemplateLng: "Lng: {x}",
-          enableUserInput: false,
-          useDMS: false, // true para mostrar en grados, minutos, segundos
-          useLatLngOrder: true
-        }));
-          
-        
-        
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map)
-      /* Invocamos una petición ajax para recuperar el geojson 
-      *  una vez descargado creamos una capa geojson de leaflet y 
-      *  la añadimos al mapa 
-      */ 
-      $.getJSON("/geojson", function(data) {
-      L.geoJson(data, {
-          style: function(feature) {
-            // Obtener la dificultad de la ruta
-            const dificultad = feature.properties.Dificultad;
-            let color;
-
-            // Asignar colores según la dificultad
-            switch(dificultad) {
-                case "Baja":
-                    color = "#00FF00"; // Verde
-                    break;
-                case "Media":
-                    color = "#FFA500"; // Naranja
-                    break;
-                case "Alta":
-                    color = "#FF0000"; // Rojo
-                    break;
-            }
-
-            return {
-                color: color,
-                weight: 3,
-                opacity: 1
-            };
-          },
-          onEachFeature: function(feature, layer) {
-              // Generar la tabla con los atributos
-              var tableHtml = "<center><table class='styled-table' style='width:100%; border-collapse: collapse;'><tr><th colspan='2' align='center'><em>Atributos</em></th></tr>";
-              
-              // Crear las filas de la tabla basadas en las propiedades del objeto
-              tableHtml += generateTableRow('Parque Nacional', feature.properties['Parque Nacional']);
-              tableHtml += generateTableRow('Nombre', feature.properties['Nombre']);
-              tableHtml += generateTableRow('Número', feature.properties['Número']);
-              tableHtml += generateTableRow('Tipo', feature.properties['Tipo']);
-              tableHtml += generateTableRow('Sentido', feature.properties['Sentido']);
-              tableHtml += generateTableRow('Dificultad', feature.properties['Dificultad']);
-              tableHtml += generateTableRow('Duración (h)', feature.properties['Duración (h)']);
-              tableHtml += generateTableRow('Longitud (km)', feature.properties['Longitud (km)']);
-              tableHtml += generateTableRow('Recomendaciones', feature.properties['Recomendaciones']);
-              
-              // Crear fila con el enlace a la página específica de la ruta
-              const rutaName = feature.properties['Nombre'];  // Usamos Name como identificador
-              const rutaUrl = `/rutaespecifica/${encodeURIComponent(rutaName)}`; // URL con Name dinámico
-
-              tableHtml += generateTableRow('Ver más información', `<a href="${rutaUrl}" target="_blank">Ver ruta completa</a>`);
-
-              
-              tableHtml += "</table></center>";
-
-              // Enlace al popup con la tabla generada
-              layer.bindPopup("<strong>" + feature.properties.Name + "</strong><br/>" + tableHtml);
-          }
-      }).addTo(map);
-    });
-
-    L.easyPrint({
-          title: 'Descargar mapa',
-          position: 'topright',
-          filename: 'Mapa personal',
-          sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
-          exportOnly: true,
-          hiddenControlContainer: true
-    }).addTo(map);
-
-    setTimeout(() => {
-    const items = document.querySelectorAll('.leaflet-control-easyPrint .easyPrintSizeMode');
-
-    items.forEach(item => {
-      const a = item.querySelector('a');
-      if (a) {
-        if (a.classList.contains('CurrentSize')) {
-          a.title = 'Tamaño visible';
-        }
-        if (a.classList.contains('A4Portrait')) {
-          a.title = 'A4 Vertical';
-        }
-        if (a.classList.contains('A4Landscape')) {
-          a.title = 'A4 Horizontal';
-        }
-      }
-    });
-    }, 500);
-    
-
-    // Función para generar filas de la tabla
-    function generateTableRow(label, value) {
-      return "<tr><th style='padding: 8px; text-align: left;'>" + label + "</th><td style='padding: 8px;'>" + value + "</td></tr>";
-    }
-        });
-    </script> 
 
     <style>#map {height:800px} </style>
 
     <!-- Pestaña y desplegable del usuario-->
     <% include pestañausuario %>
-    <% if (user) { %>
-      <p id = "titulo-principal" style="margin-left: 1500px;">
+    <p id="titulo-principal" style="margin-left: 1500px;">
+      <% if (user) { %>
         <%= user.name %> <%= user.surname %>
-      </p>
-  <% } %>
+      <% } else { %>
+        Invitado
+      <% } %>
+    </p>
 
     <!-- Titulo de guadaway linea 18 routes/index.js-->
     <h1><%= title %></h1>
@@ -216,7 +75,7 @@
 
   <!-- Filtros, todavia faltan por referenciarlos y crear los que faltan, espaciado, BASE DE DATOS-->
     <div class="form-group">
-      <select class="col-sm-2">
+      <select id="filtroDuracion" class="col-sm-2">
         <option value="" disabled selected>Duración</option>
         <option value="Menos de una hora">Menos de una hora</option>
         <option value="Entre 1 y 2 horas">Entre 1 y 2 horas</option>
@@ -224,34 +83,265 @@
         <option value="Entre 4 y 6 horas">Entre 4 y 6 horas</option>
         <option value="Más de 6 horas">Más de 6 horas</option>
       </select>
-      <select>
-        <option value="" disabled selected>Distancia</option>
+      <select id="filtroLongitud">
+        <option value="" disabled selected>Longitud</option>
         <option value="Menos de 5 km">Menos de 5 km</option>
         <option value="De 5 a 10 km">De 5 a 10 km</option>
         <option value="De 10 a 15 km">De 10 a 15 km</option>
         <option value="De 15 a 20 km">De 15 a 20 km</option>
         <option value="Más de 20 km">Más de 20 km</option>
       </select>
-      <select>
-        <option value="" disabled selected>Experiencia</option>
-        <option value="Familiar">Familiar</option>
-        <option value="Principiante">Principiante</option>
-        <option value="Avanzado">Avanzado</option>
-        <option value="Montañero">Montañero</option>
+      <select id="filtroDificultad">
+        <option value="" disabled selected>Dificultad</option>
+        <option value="Baja">Baja</option>
+        <option value="Media">Media</option>
+        <option value="Alta">Alta</option>
       </select>
-      <select>
-        <option value="" disabled selected>Tipo de recorrido</option>
-        <option value="Circular">Madrid</option>
-        <option value="Travesia">Travesia</option>
+      <select id="filtroSentido">
+        <option value="" disabled selected>Sentido</option>
+        <option value="Circular">Circular</option>
+        <option value="Ida">Ida</option>
         <option value="Ida y Vuelta">Ida y Vuelta</option>
       </select>
-      <select>
-        <option value="" disabled selected>Zona</option>
-        <option value="La Pedriza">La Pedriza</option>
-        <option value="Peñalara">Peñalara</option>
-        <option value="Navafría">Navafría</option>
-      </select>
+      <button id="aplicarFiltros">Aplicar filtros</button>
     </div>
+
+    <script>
+      let rutasLayer;
+      $( document ).ready(function(){
+        $('#registrar').on('submit', function (event) {
+          event.preventDefault();
+          var randomGeoPoints = generateRandomPoints({ 'lat': 40.790, 'lng': -4.010 }, 5000, 1);
+          randomGeoPoints = generateRandomPoints({'lat': randomGeoPoints[0][1], 'lng': randomGeoPoints[0][0]}, 1000, 5);
+          url = $(this).attr("action");
+          var postData = $(this).serializeArray();
+          postData.push({ name: 'ruta', value: JSON.stringify(randomGeoPoints) });
+          console.log (JSON.stringify(postData));
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: postData,
+            success: function () {
+              location.reload();
+            }
+          });          
+        });
+        //Aqui ocurre la referenciacion a id="map" que vemos al final del documento 
+        var map = L.map('map', {
+        fullscreenControl: true,
+        fullscreenControlOptions: {
+          title: {
+            'false': 'Ver en pantalla completa',
+            'true': 'Salir de pantalla completa'
+          },
+          position: 'bottomright'
+        }
+        }).setView([40.790, -4.010], 13);
+        L.control.scale({
+        }).addTo(map);
+        map.addControl(new L.Control.Coordinates({
+          position: "bottomleft",
+          decimals: 5,
+          decimalSeperator: ".",
+          labelTemplateLat: "Lat: {y}",
+          labelTemplateLng: "Lng: {x}",
+          enableUserInput: false,
+          useDMS: false, // true para mostrar en grados, minutos, segundos
+          useLatLngOrder: true
+        }));
+          
+        
+        
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map)
+        const rutasLayerGroup = L.layerGroup().addTo(map);
+      /* Invocamos una petición ajax para recuperar el geojson 
+      *  una vez descargado creamos una capa geojson de leaflet y 
+      *  la añadimos al mapa 
+      */ 
+// Define la función globalmente para que sea accesible en otros contextos
+function getEstiloYPopup() {
+  return {
+    style: function(feature) {
+      const dificultad = feature.properties.Dificultad;
+      let color;
+
+      // Asignar color según la dificultad
+      switch (dificultad) {
+        case "Baja": color = "#00FF00"; break;
+        case "Media": color = "#FFA500"; break;
+        case "Alta": color = "#FF0000"; break;
+        default: color = "#0000FF"; break; // color por defecto
+      }
+
+      return {
+        color: color,
+        weight: 3,
+        opacity: 1
+      };
+    },
+    onEachFeature: function(feature, layer) {
+      // Generar la tabla con los atributos
+      var tableHtml = "<center><table class='styled-table' style='width:100%; border-collapse: collapse;'><tr><th colspan='2' align='center'><em>Atributos</em></th></tr>";
+      tableHtml += generateTableRow('Parque Nacional', feature.properties['Parque Nacional']);
+      tableHtml += generateTableRow('Nombre', feature.properties['Nombre']);
+      tableHtml += generateTableRow('Número', feature.properties['Número']);
+      tableHtml += generateTableRow('Tipo', feature.properties['Tipo']);
+      tableHtml += generateTableRow('Sentido', feature.properties['Sentido']);
+      tableHtml += generateTableRow('Dificultad', feature.properties['Dificultad']);
+      tableHtml += generateTableRow('Duración (h)', feature.properties['Duración (h)']);
+      tableHtml += generateTableRow('Longitud (km)', feature.properties['Longitud (km)']);
+      tableHtml += generateTableRow('Recomendaciones', feature.properties['Recomendaciones']);
+
+      // Crear un enlace a la página de la ruta específica
+      const rutaName = feature.properties['Nombre'];
+      const rutaUrl = `/rutaespecifica/${encodeURIComponent(rutaName)}`;
+      tableHtml += generateTableRow('Ver más información', `<a href="${rutaUrl}" target="_blank">Ver ruta completa</a>`);
+
+      tableHtml += "</table></center>";
+      layer.bindPopup("<strong>" + feature.properties.Nombre + "</strong><br/>" + tableHtml);
+    }
+  };
+}
+
+// Función para manejar la carga de datos del GeoJSON
+$.getJSON("/geojson", function(data) {
+  // Procesar los datos del GeoJSON
+  const allFeatures = data.flatMap(r => r.features);
+
+  if (allFeatures.length === 0) {
+    console.log('❌ No se encontraron rutas iniciales.');
+  } else {
+    console.log(`✅ Se cargaron ${allFeatures.length} rutas.`);
+  }
+
+  // Filtrar las rutas válidas con geometría
+  const validFeatures = allFeatures.filter(feature => feature.geometry);
+
+  if (validFeatures.length === 0) {
+    console.log('❌ No hay geometrías válidas para mostrar.');
+  } else {
+    console.log(`✅ Hay ${validFeatures.length} rutas con geometría válida.`);
+  }
+
+   // Añadir las rutas al grupo de capas
+   rutasLayerGroup.clearLayers();  // Limpiar las rutas anteriores si las hay
+  L.geoJSON(validFeatures, getEstiloYPopup()).addTo(rutasLayerGroup);
+
+  // Traer las rutas al frente
+  rutasLayerGroup.eachLayer(function(layer) {
+    layer.bringToFront();
+  });
+});
+
+// Aplicar filtros
+document.getElementById('aplicarFiltros').addEventListener('click', () => {
+  const duracion = document.getElementById('filtroDuracion').value;
+  const longitud = document.getElementById('filtroLongitud').value;
+  const dificultad = document.getElementById('filtroDificultad').value;
+  const sentido = document.getElementById('filtroSentido').value;
+
+  const params = new URLSearchParams();
+  // Duración (horas)
+  const mapaDuracion = {
+    "Menos de una hora": [0, 1],
+    "Entre 1 y 2 horas": [1, 2],
+    "Entre 2 y 4 horas": [2, 4],
+    "Entre 4 y 6 horas": [4, 6],
+    "Más de 6 horas": [6, 99]
+  };
+  // Distancia (km)
+  const mapaLongitud = {
+    "Menos de 5 km": [0, 5],
+    "De 5 a 10 km": [5, 10],
+    "De 10 a 15 km": [10, 15],
+    "De 15 a 20 km": [15, 20],
+    "Más de 20 km": [20, 99]
+  };
+
+  if (duracion && mapaDuracion[duracion]) {
+    const [minDur, maxDur] = mapaDuracion[duracion];
+    params.append('minDuracion', minDur);
+    params.append('maxDuracion', maxDur);
+  }
+
+  if (longitud && mapaLongitud[longitud]) {
+    const [minDist, maxDist] = mapaLongitud[longitud];
+    params.append('minDistancia', minDist);
+    params.append('maxDistancia', maxDist);
+  }
+  if (dificultad) params.append('dificultad', dificultad);
+  if (sentido) params.append('sentido', sentido);
+
+  fetch(`/filtrar-rutas?${params.toString()}`)
+  .then(res => res.json())
+  .then(data => {
+    if (data.length === 0) {
+      console.log('❌ No se encontraron rutas con esos filtros.');
+    } else {
+      console.log(`✅ Se aplicaron los filtros, se encontraron ${data.length} rutas.`);
+      
+      // Limpiar las rutas anteriores en el mapa
+      rutasLayerGroup.clearLayers();
+      
+      // Añadir las rutas filtradas al grupo de capas
+      const allFeatures = data.flatMap(r => r.features); // Asegúrate de que data contiene las rutas con geometría
+
+      // Verifica si allFeatures contiene geometría válida
+      const validFeatures = allFeatures.filter(feature => feature.geometry);
+
+      if (validFeatures.length === 0) {
+        console.log('❌ No hay rutas con geometría válida.');
+      } else {
+        L.geoJSON(validFeatures, getEstiloYPopup()).addTo(rutasLayerGroup);
+      }
+
+      // Traer las rutas al frente
+      rutasLayerGroup.eachLayer(function(layer) {
+        layer.bringToFront();
+      });
+    }
+  })
+  .catch(err => console.error('Error al aplicar filtros:', err));
+});
+
+    L.easyPrint({
+          title: 'Descargar mapa',
+          position: 'topright',
+          filename: 'Mapa personal',
+          sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+          exportOnly: true,
+          hiddenControlContainer: true
+    }).addTo(map);
+
+    setTimeout(() => {
+    const items = document.querySelectorAll('.leaflet-control-easyPrint .easyPrintSizeMode');
+
+    items.forEach(item => {
+      const a = item.querySelector('a');
+      if (a) {
+        if (a.classList.contains('CurrentSize')) {
+          a.title = 'Tamaño visible';
+        }
+        if (a.classList.contains('A4Portrait')) {
+          a.title = 'A4 Vertical';
+        }
+        if (a.classList.contains('A4Landscape')) {
+          a.title = 'A4 Horizontal';
+        }
+      }
+    });
+    }, 500);
+    
+
+    // Función para generar filas de la tabla
+    function generateTableRow(label, value) {
+      return "<tr><th style='padding: 8px; text-align: left;'>" + label + "</th><td style='padding: 8px;'>" + value + "</td></tr>";
+    }
+  });
+    // Función para generar puntos aleatorios dentro de un radio específico
+    </script> 
 
     <div id="map"></div>
 
