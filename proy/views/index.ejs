@@ -294,7 +294,10 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
       if (validFeatures.length === 0) {
         console.log('❌ No hay rutas con geometría válida.');
       } else {
-        L.geoJSON(validFeatures, getEstiloYPopup()).addTo(rutasLayerGroup);
+        const geojsonLayer = L.geoJSON(validFeatures, getEstiloYPopup()).addTo(rutasLayerGroup);
+
+        // 👉 Centrar el mapa en las rutas visibles
+        map.fitBounds(geojsonLayer.getBounds());
       }
 
       // Traer las rutas al frente
