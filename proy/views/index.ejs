@@ -8,7 +8,7 @@
 
     <!-- Pestaña y desplegable del usuario-->
     <% include pestañausuario %>
-    <p id="titulo-principal" style="margin-left: 1500px;">
+    <p id="titulo-principal">
       <% if (user) { %>
         <%= user.name %> <%= user.surname %>
       <% } else { %>
@@ -104,10 +104,19 @@
         <option value="Ida y Vuelta">Ida y Vuelta</option>
       </select>
       <button id="aplicarFiltros">Aplicar filtros</button>
+      <button id="btn-medir">Medir distancia</button>
+      <div id="mensajeFiltros"></div>
+
     </div>
 
     <script>
-      let rutasLayer;
+      let midiendo = false;
+      let puntosMedicion = [];
+      let lineaMedicion = null;
+      let marcadorInicio = null;
+      let marcadorFin = null;
+      let puntosInteresLayerGroup;
+      let controlCapas;
       $( document ).ready(function(){
         $('#registrar').on('submit', function (event) {
           event.preventDefault();
@@ -149,13 +158,22 @@
           useDMS: false, // true para mostrar en grados, minutos, segundos
           useLatLngOrder: true
         }));
-          
         
         
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map)
         const rutasLayerGroup = L.layerGroup().addTo(map);
+        const puntosInteresLayerGroup = L.layerGroup().addTo(map);
+        controlCapas = L.control.layers(
+        null, // no usamos capas base adicionales en este caso
+        {
+          '🗺️ Rutas': rutasLayerGroup,
+          '📍 Puntos de interés': puntosInteresLayerGroup
+        },
+        { collapsed: true
+         } // Opcional: mostrar el panel abierto por defecto
+      ).addTo(map);
       /* Invocamos una petición ajax para recuperar el geojson 
       *  una vez descargado creamos una capa geojson de leaflet y 
       *  la añadimos al mapa 
@@ -235,6 +253,36 @@ $.getJSON("/geojson", function(data) {
   });
 });
 
+fetch('/puntos-interes')
+  .then(res => res.json())
+  .then(data => {
+    if (!data.features) return console.warn("No hay puntos de interés.");
+
+    const icono = L.icon({
+      iconUrl: 'images/door-open.svg', // ruta de tu icono
+      iconSize: [25, 25],
+      iconAnchor: [12, 25],
+      popupAnchor: [0, -25]
+    });
+
+    data.features.forEach(feature => {
+      const coords = feature.geometry.coordinates;
+      const props = feature.properties;
+
+      const marker = L.marker([coords[1], coords[0]], { icon: icono }).bindPopup(`
+        <strong>${props.DS_CENTRO}</strong><br>
+        ${props.DS_MUNICIP}<br>
+        ${props.DS_DIRECCI}<br>
+        Tel: ${props.DS_TELEFON}
+      `);
+
+      puntosInteresLayerGroup.addLayer(marker);
+    });
+
+    puntosInteresLayerGroup.addTo(map); // asegúrate que 'map' ya está declarado
+  })
+  .catch(err => console.error("❌ Error cargando puntos de interés:", err));
+
 // Aplicar filtros
 document.getElementById('aplicarFiltros').addEventListener('click', () => {
   const duracion = document.getElementById('filtroDuracion').value;
@@ -277,10 +325,16 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
   fetch(`/filtrar-rutas?${params.toString()}`)
   .then(res => res.json())
   .then(data => {
+    const mensajeDiv = document.getElementById('mensajeFiltros');
+
     if (data.length === 0) {
-      console.log('❌ No se encontraron rutas con esos filtros.');
+      console.log(' No se encontraron rutas con esos filtros.');
+      mensajeDiv.textContent = ' No se encontraron rutas con esos filtros.';
+      mensajeDiv.style.color = 'red';
     } else {
-      console.log(`✅ Se aplicaron los filtros, se encontraron ${data.length} rutas.`);
+      console.log(` Se aplicaron los filtros, se encontraron ${data.length} rutas.`);
+      mensajeDiv.textContent = ` Se aplicaron los filtros. Se encontraron ${data.length} rutas.`;
+      mensajeDiv.style.color = 'green';
       
       // Limpiar las rutas anteriores en el mapa
       rutasLayerGroup.clearLayers();
@@ -311,7 +365,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
 
     L.easyPrint({
           title: 'Descargar mapa',
-          position: 'topright',
+          position: 'topleft',
           filename: 'Mapa personal',
           sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
           exportOnly: true,
@@ -336,16 +390,60 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
       }
     });
     }, 500);
-    
 
     // Función para generar filas de la tabla
     function generateTableRow(label, value) {
       return "<tr><th style='padding: 8px; text-align: left;'>" + label + "</th><td style='padding: 8px;'>" + value + "</td></tr>";
     }
-  });
-    // Función para generar puntos aleatorios dentro de un radio específico
-    </script> 
+    $('#btn-medir').on('click', () => {
+    midiendo = !midiendo;
+    puntosMedicion = [];
 
+    if (lineaMedicion) {
+      map.removeLayer(lineaMedicion);
+      lineaMedicion = null;
+    }
+    if (marcadorInicio) {
+      map.removeLayer(marcadorInicio);
+      marcadorInicio = null;
+    }
+    if (marcadorFin) {
+      map.removeLayer(marcadorFin);
+      marcadorFin = null;
+    }
+
+    alert(midiendo ? 'Modo medición activado. Haz clic en el mapa para seleccionar dos puntos.' : 'Modo medición desactivado.');
+  });
+
+  map.on('click', function (e) {
+    if (!midiendo) return;
+
+    puntosMedicion.push(e.latlng);
+
+    if (puntosMedicion.length === 1) {
+      marcadorInicio = L.marker(e.latlng).addTo(map);
+    }
+
+    if (puntosMedicion.length === 2) {
+      marcadorFin = L.marker(e.latlng).addTo(map);
+      lineaMedicion = L.polyline(puntosMedicion, { color: 'blue', weight: 3 }).addTo(map);
+
+      const distancia = map.distance(puntosMedicion[0], puntosMedicion[1]);
+      const distanciaKm = (distancia / 1000).toFixed(2);
+
+      L.popup()
+        .setLatLng(puntosMedicion[1])
+        .setContent(`Distancia: ${distanciaKm} km`)
+        .openOn(map);
+
+      // Reset
+      midiendo = false;
+      puntosMedicion = [];
+    }
+  });
+  });
+    
+    </script> 
     <div id="map"></div>
 
     <table class = "table table-stripped">

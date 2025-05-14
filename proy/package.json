@@ -25,6 +25,7 @@
     "object-to-xml": "^2.0.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
+    "proj4": "^2.16.2",
     "swagger": "^0.7.5",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"

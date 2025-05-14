@@ -204,3 +204,12 @@ a {
 }
 
 
+#titulo-principal {
+  position: absolute;
+  top: 130px; /* ajusta según el tamaño de tu icono */
+  left: 1610px;
+  transform: translateX(-50%);
+  font-weight: bold;
+  text-align: center;
+}
+

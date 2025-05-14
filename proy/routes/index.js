@@ -118,6 +118,20 @@ router.get('/filtrar-rutas', async (req, res) => {
 
 module.exports = router;
 
+const PuntoInteres = require('../models/entradas');
+
+router.get('/puntos-interes', async (req, res) => {
+  try {
+    const data = await PuntoInteres.findOne(); // solo hay un FeatureCollection
+    res.json(data);
+  } catch (error) {
+    console.error('❌ Error al obtener puntos de interés:', error);
+    res.status(500).json({ error: 'Error al obtener puntos de interés' });
+  }
+});
+
+module.exports = router;
+
 router.get("/logout", (req, res) => {
   req.logout(function (err) {
       if (err) { return next(err); }
