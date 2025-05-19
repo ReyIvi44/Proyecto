@@ -27,6 +27,17 @@
 
 
     <div id="mapaRuta" style="height: 500px; margin-top: 20px;"></div>
+    <div id="comentarios">
+        <h3>Comentarios</h3>
+      
+        <form id="comentarioForm">
+          <input type="text" id="nombre" placeholder="Tu nombre" required>
+          <textarea id="mensaje" placeholder="Escribe tu comentario..." required></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      
+        <div id="listaComentarios"></div>
+      </div>
     <script>
     // Espera a que la página cargue
     document.addEventListener("DOMContentLoaded", function () {
@@ -73,6 +84,41 @@
         mapa.fitBounds(geojson.getBounds());
         });
     });
+    </script>
+    <script>
+        const rutaId = '<%= ruta._id %>'; // Asegúrate de pasar 'ruta' desde el backend
+      
+        async function cargarComentarios() {
+          const res = await fetch(`/comentarios/${rutaId}`);
+          const comentarios = await res.json();
+      
+          const lista = document.getElementById('listaComentarios');
+          lista.innerHTML = comentarios.map(c => `
+            <div class="comentario">
+              <strong>${c.nombre}</strong> <em>${new Date(c.fecha).toLocaleString()}</em>
+              <p>${c.mensaje}</p>
+            </div>
+          `).join('');
+        }
+      
+        document.getElementById('comentarioForm').addEventListener('submit', async e => {
+          e.preventDefault();
+          const nombre = document.getElementById('nombre').value;
+          const mensaje = document.getElementById('mensaje').value;
+      
+          const res = await fetch('/comentarios', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ rutaId, nombre, mensaje })
+          });
+      
+          if (res.ok) {
+            document.getElementById('comentarioForm').reset();
+            cargarComentarios();
+          }
+        });
+      
+        cargarComentarios();
     </script>
 
     <a href="/">Volver al mapa</a>

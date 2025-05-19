@@ -135,6 +135,17 @@
             }
           });          
         });
+        const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap'
+        });
+
+        const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles © Esri'
+        });
+
+        const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; Carto'
+        });
         //Aqui ocurre la referenciacion a id="map" que vemos al final del documento 
         var map = L.map('map', {
         fullscreenControl: true,
@@ -144,10 +155,12 @@
             'true': 'Salir de pantalla completa'
           },
           position: 'bottomright'
-        }
-        }).setView([40.790, -4.010], 13);
+        },
+        layers: [osm] // ← Capa base inicial
+      }).setView([40.790, -4.010], 13);
         L.control.scale({
         }).addTo(map);
+
         map.addControl(new L.Control.Coordinates({
           position: "bottomleft",
           decimals: 5,
@@ -165,8 +178,13 @@
         }).addTo(map)
         const rutasLayerGroup = L.layerGroup().addTo(map);
         const puntosInteresLayerGroup = L.layerGroup().addTo(map);
+        const baseMaps = {
+        "🗺️ OpenStreetMap": osm,
+        "🛰️ Satélite (Esri)": esriSat,
+        "🧭 Carto Light": cartoLight
+        };
         controlCapas = L.control.layers(
-        null, // no usamos capas base adicionales en este caso
+        baseMaps,
         {
           '🗺️ Rutas': rutasLayerGroup,
           '📍 Puntos de interés': puntosInteresLayerGroup

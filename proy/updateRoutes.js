@@ -1,56 +1,66 @@
-const mongoose = require('mongoose');
-const Ruta = require('./models/ruta'); // Asegúrate de que esta ruta sea correcta
+const { MongoClient } = require('mongodb');
 
-// Conecta con tu base de datos
-mongoose.connect('mongodb://localhost:27017/Guadaway', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// 🔧 Cambia esto con tu string de conexión real
+const uri = 'mongodb://localhost:27017'; 
+const dbName = 'Guadaway';
+const collectionName = 'rutas';
 
-mongoose.connection.once('open', async () => {
-  console.log('📡 Conectado a MongoDB');
+async function run() {
+  const client = new MongoClient(uri);
 
   try {
-    const rutas = await Ruta.find();
+    await client.connect();
+    console.log('Conectado a MongoDB');
 
-    for (const ruta of rutas) {
-      let actualizado = false;
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
 
-      for (const feature of ruta.features) {
-        const props = feature.properties;
+    const cursor = collection.find();
 
-        // Verifica y convierte si es string
-        if (typeof props['Duración (h)'] === 'string') {
-          const valor = parseFloat(props['Duración (h)']);
-          if (!isNaN(valor)) {
-            props['Duración (h)'] = valor;
-            actualizado = true;
+    let count = 0;
+
+    while (await cursor.hasNext()) {
+      const doc = await cursor.next();
+      let updated = false;
+
+      if (Array.isArray(doc.features)) {
+        doc.features.forEach((feature, i) => {
+          if (feature.properties) {
+            const duracion = feature.properties["Duración (h)"];
+            const longitud = feature.properties["Longitud (km)"];
+
+            // Intentar convertir si son strings
+            if (typeof duracion === 'string') {
+              const parsed = parseFloat(duracion);
+              if (!isNaN(parsed)) {
+                feature.properties["Duración (h)"] = parsed;
+                updated = true;
+              }
+            }
+
+            if (typeof longitud === 'string') {
+              const parsed = parseFloat(longitud);
+              if (!isNaN(parsed)) {
+                feature.properties["Longitud (km)"] = parsed;
+                updated = true;
+              }
+            }
           }
-        }
+        });
 
-        if (typeof props['Longitud (km)'] === 'string') {
-          const valor = parseFloat(props['Longitud (km)']);
-          if (!isNaN(valor)) {
-            props['Longitud (km)'] = valor;
-            actualizado = true;
-          }
+        if (updated) {
+          await collection.updateOne({ _id: doc._id }, { $set: { features: doc.features } });
+          count++;
         }
-      }
-
-      // Guarda el documento actualizado
-      if (actualizado) {
-        console.log(`Guardando ${ruta.name}...`);
-        await ruta.save();
-        console.log(`✅ Ruta ${ruta.name} actualizada.`);
-      } else {
-        console.log(`⏭️ Ruta ${ruta.name} no necesita cambios.`);
       }
     }
 
-    console.log('✅ Conversión completada.');
-    mongoose.connection.close();
-  } catch (err) {
-    console.error('❌ Error actualizando rutas:', err);
-    mongoose.connection.close();
+    console.log(`Actualizados ${count} documentos.`);
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    await client.close();
   }
-});
+}
+
+run();
