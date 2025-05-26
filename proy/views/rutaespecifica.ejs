@@ -11,30 +11,58 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <h1 class="titulorutas"><%= ruta.features[0].properties["Nombre"] %></h1>
-    <p><strong>Parque Nacional:</strong> <%= ruta.features[0].properties["Parque Nacional"] %></p>
-    <p><strong>Dificultad:</strong> <%= ruta.features[0].properties.Dificultad %></p>
-    <p><strong>Duración:</strong> <%= ruta.features[0].properties["Duración (h)"] %> horas</p>
-    <div class="imagenes">
+    <div class="container mt-5">
+    <h1 class="text-center titulorutas mb-5"><%= ruta.features[0].properties["Nombre"] %></h1>
+    <% const dificultad = ruta.features[0].properties.Dificultad;
+      let color;
+      switch (dificultad) {
+        case "Baja": color = "#00FF00"; break;
+        case "Media": color = "#FFA500"; break;
+        case "Alta": color = "#FF0000"; break;
+        default: color = "#0000FF"; break;
+      }
+      %>
+
+        <div class="row justify-content-center text-center mb-3">
+            <div class="col-md-3">
+                <p><strong>Parque Nacional:</strong> <%= ruta.features[0].properties["Parque Nacional"] %></p>
+            </div>
+            <div class="col-md-3">
+                <p style="background-color: <%= color %>; padding: 6px; border-radius: 6px">
+                  <strong>Dificultad:</strong> <%= ruta.features[0].properties.Dificultad %></p>
+            </div>
+            <div class="col-md-3">
+                <p><strong>Duración:</strong> <%= ruta.features[0].properties["Duración (h)"] %> horas</p>
+            </div>
+        </div>
+    </div>
+    <div class="imagenes d-flex justify-content-center flex-wrap gap-5 mt-5">
         <!-- Imagen 1 -->
-        <img src="/images/rutas/<%= ruta.name%>1.jpg" alt="Imagen 1 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid">
+        <img src="/images/rutas/<%= ruta.name%>1.jpg" alt="Imagen 1 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid"
+        style="max-width:30%; height:auto;">
 
         <!-- Imagen 2 -->
-        <img src="/images/rutas/<%= ruta.name%>2.jpg" alt="Imagen 2 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid">
+        <img src="/images/rutas/<%= ruta.name%>2.jpg" alt="Imagen 2 de <%= ruta.features[0].properties["Nombre"] %>" class="img-fluid"
+        style="max-width:30%; height:auto;">
     </div>
+    <div class="DescrRecom mt-5 mb-5">
     <p><strong>Descripción:</strong> <%= ruta.features[0].properties.Descripción %></p>
     <p><strong>Recomendaciones:</strong> <%= ruta.features[0].properties.Recomendaciones %></p>
-
+    </div>
 
     <div id="mapaRuta" style="height: 500px; margin-top: 20px;"></div>
     <div id="comentarios">
         <h3>Comentarios</h3>
       
-        <form id="comentarioForm">
-          <input type="text" id="nombre" placeholder="Tu nombre" required>
-          <textarea id="mensaje" placeholder="Escribe tu comentario..." required></textarea>
-          <button type="submit">Enviar</button>
-        </form>
+        <% if (user) { %>
+          <form id="comentarioForm">
+            <input type="text" id="nombre" value="<%= user.username %>" hidden>
+            <textarea id="mensaje" required placeholder="Escribe tu comentario"></textarea>
+            <button type="submit">Enviar</button>
+          </form>
+        <% } else { %>
+          <p>🔒 Inicia sesión para escribir un comentario.</p>
+        <% } %>
       
         <div id="listaComentarios"></div>
       </div>
@@ -86,39 +114,42 @@
     });
     </script>
     <script>
-        const rutaId = '<%= ruta._id %>'; // Asegúrate de pasar 'ruta' desde el backend
-      
-        async function cargarComentarios() {
-          const res = await fetch(`/comentarios/${rutaId}`);
-          const comentarios = await res.json();
-      
-          const lista = document.getElementById('listaComentarios');
-          lista.innerHTML = comentarios.map(c => `
-            <div class="comentario">
-              <strong>${c.nombre}</strong> <em>${new Date(c.fecha).toLocaleString()}</em>
-              <p>${c.mensaje}</p>
-            </div>
-          `).join('');
-        }
-      
-        document.getElementById('comentarioForm').addEventListener('submit', async e => {
+      const rutaId = '<%= ruta._id %>';
+
+      async function cargarComentarios() {
+        const res = await fetch(`/comentarios/${rutaId}`);
+        const comentarios = await res.json();
+
+        const lista = document.getElementById('listaComentarios');
+        lista.innerHTML = comentarios.map(c => `
+          <div class="comentario">
+            <strong>${c.nombre}</strong> <em>${new Date(c.fecha).toLocaleString()}</em>
+            <p>${c.mensaje}</p>
+          </div>
+        `).join('');
+      }
+
+      const formulario = document.getElementById('comentarioForm');
+      if (formulario) {
+        formulario.addEventListener('submit', async e => {
           e.preventDefault();
           const nombre = document.getElementById('nombre').value;
           const mensaje = document.getElementById('mensaje').value;
-      
+
           const res = await fetch('/comentarios', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ rutaId, nombre, mensaje })
           });
-      
+
           if (res.ok) {
-            document.getElementById('comentarioForm').reset();
+            formulario.reset();
             cargarComentarios();
           }
         });
-      
-        cargarComentarios();
+      }
+
+      cargarComentarios();
     </script>
 
     <a href="/">Volver al mapa</a>

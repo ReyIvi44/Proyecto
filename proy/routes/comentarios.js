@@ -14,8 +14,16 @@ router.get('/:rutaId', async (req, res) => {
 });
 
 // Crear nuevo comentario
+// Crear nuevo comentario
 router.post('/', async (req, res) => {
-  const { rutaId, nombre, mensaje } = req.body;
+  // Verificamos si el usuario está autenticado
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Debes iniciar sesión para comentar.' });
+  }
+
+  const { rutaId, mensaje } = req.body;
+  const nombre = req.session.user.username || req.session.user.nombre; // o lo que uses
+
   try {
     const nuevoComentario = new Comentario({ rutaId, nombre, mensaje });
     await nuevoComentario.save();

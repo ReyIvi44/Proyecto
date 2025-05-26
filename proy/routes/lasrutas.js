@@ -71,7 +71,7 @@ router.get('/rutaespecifica/:name', async (req, res) => {
       return res.status(404).send('Ruta no encontrada');
     }
 
-    res.render('rutaespecifica', { ruta });
+    res.render('rutaespecifica', { ruta, user: req.session.user });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al obtener la ruta');

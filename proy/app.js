@@ -47,6 +47,10 @@ app.use(
       store: new MongoStore({ mongooseConnection: mongoose.connection })
   })
 );
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
 
 // Passport middleware
 app.use(passport.initialize()); 
@@ -98,4 +102,6 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
 
