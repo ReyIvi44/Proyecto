@@ -52,7 +52,7 @@ a {
 .dropdown-content {
   z-index: 9999;
   display: none;
-  margin-left: 1150px;
+  margin-left: 1300px;
   display: right;
   position: absolute;
   background: white;
@@ -114,17 +114,10 @@ a {
   width: 80%;	
 }
 
-.container {
-  display: flex;
-  margin-left: 0px;
-  margin-bottom: 200px;
-
-}
 .container1 {
   display: flex;
-  margin-left: 0px;
-  margin-top: 100px;
-  height: 25vh;
+  left: 70px;
+  margin-top: 70px;
   position: fixed;
 }
 
@@ -132,7 +125,6 @@ a {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
-  margin-left: 400px;
   margin-top: 50px;
   padding-left: 50px;
   scroll-margin-top: 150px;
@@ -144,7 +136,6 @@ a {
   background: #f4f4f4;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  margin-right: 100px;
   position: fixed;
 }
 
@@ -175,7 +166,7 @@ a {
 
 /*Estilo imagenes rutaespecifica.ejs*/
 .imagenes{
-  display: flex; /* Para alinear las imágenes en una fila */
+    display: flex; /* Para alinear las imágenes en una fila */
     justify-content: center; /* Centrar las imágenes */
     gap: 20px; /* Espacio entre imágenes */
     margin-top: 20px;
@@ -203,11 +194,10 @@ a {
   margin-bottom: 0 !important; /* elimina el espacio vertical */
 }
 
-
 #titulo-principal {
   position: absolute;
   top: 130px; /* ajusta según el tamaño de tu icono */
-  left: 1610px;
+  left: 1813px;
   transform: translateX(-50%);
   font-weight: bold;
   text-align: center;
@@ -221,5 +211,23 @@ a {
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 8px;
+}
+.background-login{
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;     
+  height: 100vh;
+  background-image: url("/images/foto_iniciosesion.jpg");
+  background-size: cover; 
+  background-position: center center;  
+  background-repeat: no-repeat;
+  display: flex;  
+}
+
+.frecuentestexto{
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #333;
 }
 

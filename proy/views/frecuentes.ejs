@@ -6,16 +6,16 @@
     <% include header %>
   </head>
   <body>
-    <div style=" position: fixed; margin-left: 2px;">
+    <div style=" margin-left: 2px;">
     <% include pestañausuario %>
     </div>
     <% if (user) { %>
-      <p id = "titulo-principal" style="margin-left: 10px;">
+      <p id = "titulo-principal">
         <%= user.name %> <%= user.surname %>
       </p>
   <% } %>
     <div class="header1">
-        <h1 style="margin-top: 50px;">Preguntas Frecuentes</h1>
+        <h1 style="margin-top: 60px;">Preguntas Frecuentes</h1>
     </div>
     <div class="container">
         <div class="container1">
@@ -32,14 +32,14 @@
         </div>
         <!-- Contenido principal con las respuestas -->
         <div class="content-wrapper">
-            <h2  id="pregunta1">Herramienta de medición</h2>
-            <p>La herramienta de medición es una funcionalidad que permite a los usuarios medir distancias en el mapa. Esta herramienta es especialmente útil para calcular distancias entre puntos y obtener información geográfica precisa.</p>
-            <p>Para utilizar la herramienta de medición, sigue estos pasos:</p>
+            <h2  id="pregunta1" class="fs-1">Herramienta de medición</h2>
+            <p class="fs-3">La herramienta de medición es una funcionalidad que permite a los usuarios medir distancias en el mapa. Esta herramienta es especialmente útil para calcular distancias entre puntos y obtener información geográfica precisa.</p>
+            <p class="fs-3">Para utilizar la herramienta de medición, sigue estos pasos:</p>
             <ol>
-                <li>Haz clic en el icono de la herramienta de medición en la barra de herramientas del mapa.</li>
-                <li>Selecciona el punto de inicio haciendo clic en el mapa.</li>
-                <li>Mueve el cursor al punto final y haz clic nuevamente para completar la medición.</li>
-                <li>La distancia se mostrará en la pantalla, junto con las coordenadas de los puntos seleccionados.</li> 
+                <li class="fs-3">Haz clic en el icono de la herramienta de medición en la barra de herramientas del mapa.</li>
+                <li class="fs-3">Selecciona el punto de inicio haciendo clic en el mapa.</li>
+                <li class="fs-3">Mueve el cursor al punto final y haz clic nuevamente para completar la medición.</li>
+                <li class="fs-3">La distancia se mostrará en la pantalla, junto con las coordenadas de los puntos seleccionados.</li> 
             </ol>
             <h2 id="pregunta2">Herramienta de descarga</h2>
             <p>Respuesta a la pregunta 2. Explicación detallada...</p>
@@ -72,10 +72,6 @@
             
         </div>
     </div>
-
-
-
-    
     <% include footer %>
     <script>
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -46,11 +46,12 @@
         style="max-width:30%; height:auto;">
     </div>
     <div class="DescrRecom mt-5 mb-5">
-    <p><strong>Descripción:</strong> <%= ruta.features[0].properties.Descripción %></p>
-    <p><strong>Recomendaciones:</strong> <%= ruta.features[0].properties.Recomendaciones %></p>
+    <h5 style="margin-left:80px;"><strong>Descripción:</strong></h5>
+    <p style="margin-left:120px;"><%= ruta.features[0].properties.Descripción %></p>
+    <h5 class="mt-5" style="margin-left:80px;"><strong>Recomendaciones:</strong></h5>
+    <p style="margin-left:120px;"><%= ruta.features[0].properties.Recomendaciones %></p>
     </div>
-
-    <div id="mapaRuta" style="height: 500px; margin-top: 20px;"></div>
+    <div id="mapaRuta" class="mb-5" style="height: 500px; margin-top: 20px;"></div>
     <div id="comentarios">
         <h3>Comentarios</h3>
       

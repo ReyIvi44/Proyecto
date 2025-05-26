@@ -6,26 +6,28 @@
     <% include header %>
   </head>
   <body>
-    <div class="cuadrado">
-        <div class="form-container">
-            <h2 style="text-align: center;">Inicio de Sesión</h2>
-            <h1></h1>
-            <form action="/iniciosesion" method="POST">
-                <div class="input-group" style="margin-bottom: 10px">
-                    <label style= "display: block" for="email">Correo Electrónico</label>
-                    <input style="width: 150%; max-width: 400px;" type="email" id="email" name="email" required>
-                </div>
-                <div class="input-group" style="margin-bottom: 10px">
-                    <label style= "display: block" for="password">Contraseña</label>
-                    <input style="width: 150%; max-width: 400px;" type="password" id="password" name="password" required>
-                </div>
-                <div class="registrarse">
-                <button type="submit" class="submit-btn">Iniciar Sesión</button>
-                </div>
-            </form>
-            <p>¿No tienes cuenta todavía? <a href="/registro">Registrarse</a></p>
-            <a href="/#" target="_blank" class="btn btn-success" role="button">Volver</a>
-        </div>
+    <div class="background-login">
+      <div class="cuadrado">
+          <div class="form-container">
+              <h2 style="text-align: center;">Inicio de Sesión</h2>
+              <h1></h1>
+              <form action="/iniciosesion" method="POST">
+                  <div class="input-group" style="margin-bottom: 10px">
+                      <label style= "display: block" for="email">Correo Electrónico</label>
+                      <input style="width: 150%; max-width: 400px;" type="email" id="email" name="email" required>
+                  </div>
+                  <div class="input-group" style="margin-bottom: 10px">
+                      <label style= "display: block" for="password">Contraseña</label>
+                      <input style="width: 150%; max-width: 400px;" type="password" id="password" name="password" required>
+                  </div>
+                  <div class="registrarse">
+                  <button type="submit" class="submit-btn">Iniciar Sesión</button>
+                  </div>
+              </form>
+              <p>¿No tienes cuenta todavía? <a href="/registro">Registrarse</a></p>
+              <a href="/#" target="_blank" class="btn btn-success" role="button">Volver</a>
+          </div>
+      </div>
     </div>
   </body>
 </html>
