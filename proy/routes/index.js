@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 var o2x = require('object-to-xml');
 
-require('../models/personaje'); 
+
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
-Personaje = mongoose.model('Personaje');
 
 
 /* GET home page. */

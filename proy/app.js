@@ -12,8 +12,6 @@ const swaggerFile = require('./swagger_output.json')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var signupRouter = require('./routes/signup');
 //Nuevo
 var registroRouter = require('./routes/registro');
 var iniciosesionRouter = require('./routes/iniciosesion');
@@ -73,8 +71,6 @@ app.use(express.static('public'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/login', loginRouter);
-app.use('/signup', signupRouter);
 //Nuevo
 app.use('/registro', registroRouter);
 app.use('/iniciosesion', iniciosesionRouter);

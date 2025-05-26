@@ -6,7 +6,7 @@ const passport = require("passport");
 	
 	// login view
 	router.get('/', (req, res) => {
-		res.render('iniciosesion', {
+		res.render('iniciosesion.ejs', {
 			//message: req.flash('loginMessage')
       message:""
 		});
