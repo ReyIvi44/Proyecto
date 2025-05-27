@@ -231,3 +231,51 @@ a {
   color: #333;
 }
 
+.comentario-form {
+    background-color: #f9f9f9;
+    padding: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin-top: 1em;
+  }
+
+  .comentario-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+
+  .comentario-form textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+    padding: 0.75em;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    transition: border-color 0.3s;
+  }
+
+  .comentario-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .comentario-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75em 1.5em;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .comentario-form button:hover {
+    background-color: #0056b3;
+  }
+

@@ -56,11 +56,14 @@
         <h3>Comentarios</h3>
       
         <% if (user) { %>
-          <form id="comentarioForm">
-            <input type="text" id="nombre" value="<%= user.username %>" hidden>
-            <textarea id="mensaje" required placeholder="Escribe tu comentario"></textarea>
-            <button type="submit">Enviar</button>
-          </form>
+        <form id="comentarioForm" class="comentario-form">
+          <div class="campo-textarea">
+            <label for="mensaje">💬 Tu comentario:</label>
+            <textarea id="mensaje" required placeholder="Escribe tu comentario..."></textarea>
+          </div>
+          
+          <button type="submit">✉️ Enviar</button>
+        </form>
         <% } else { %>
           <p>🔒 Inicia sesión para escribir un comentario.</p>
         <% } %>
@@ -116,6 +119,7 @@
     </script>
     <script>
       const rutaId = '<%= ruta._id %>';
+      const usuarioActualId = '<%= user ? user._id : "" %>';
 
       async function cargarComentarios() {
         const res = await fetch(`/comentarios/${rutaId}`);
@@ -123,29 +127,48 @@
 
         const lista = document.getElementById('listaComentarios');
         lista.innerHTML = comentarios.map(c => `
-          <div class="comentario">
-            <strong>${c.nombre}</strong> <em>${new Date(c.fecha).toLocaleString()}</em>
+          <div class="comentario" data-id="${c._id}">
+            <strong>${c.nombre || 'Anónimo'}</strong> 
+            <em>${new Date(c.fecha).toLocaleString()}</em>
             <p>${c.mensaje}</p>
+            ${c.usuarioId === usuarioActualId ? `<button class="btnEliminar" data-id="${c._id}">Eliminar</button>` : ''}
           </div>
         `).join('');
+
+        document.querySelectorAll('.btnEliminar').forEach(btn => {
+          btn.addEventListener('click', async e => {
+            const id = e.target.dataset.id;
+            if (confirm('¿Seguro que quieres eliminar este comentario?')) {
+              const res = await fetch(`/comentarios/${id}`, { method: 'DELETE' });
+              if (res.ok) {
+                cargarComentarios();
+              } else {
+                const data = await res.json();
+                alert(data.error || 'Error al eliminar comentario');
+              }
+            }
+          });
+        });
       }
 
       const formulario = document.getElementById('comentarioForm');
       if (formulario) {
         formulario.addEventListener('submit', async e => {
           e.preventDefault();
-          const nombre = document.getElementById('nombre').value;
           const mensaje = document.getElementById('mensaje').value;
 
           const res = await fetch('/comentarios', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ rutaId, nombre, mensaje })
+            body: JSON.stringify({ rutaId, mensaje })
           });
 
           if (res.ok) {
             formulario.reset();
             cargarComentarios();
+          } else {
+            const data = await res.json();
+            alert(data.error || 'Error al enviar comentario');
           }
         });
       }

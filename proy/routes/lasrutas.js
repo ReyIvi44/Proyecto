@@ -2,17 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Ruta = require('../models/ruta'); // Importamos el modelo
 
-/*// 🔹 Obtener todas las rutas en formato JSON (para la página de inicio con el mapa)
-router.get('/geojson', async (req, res) => {
-  try {
-    const rutas = await Ruta.find();
-    res.json(rutas); // Devuelve todas las rutas en formato JSON
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al obtener las rutas');
-  }
-});
-*/
 // Ruta para obtener todas las rutas en formato GeoJSON
 router.get('/geojson', async (req, res) => {
   try {
@@ -94,7 +83,7 @@ router.get('/rutaespecifica', async (req, res) => {
     }
 
     // Renderizar la página de la ruta específica
-    res.render('rutaespecifica', { ruta: ruta });
+    res.render('rutaespecifica', { ruta, user: req.session.user });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al obtener la ruta');

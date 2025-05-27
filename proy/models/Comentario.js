@@ -7,6 +7,11 @@ const comentarioSchema = new Schema({
     ref: 'Ruta',
     required: true
   },
+  usuarioId: { 
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true 
+  },
   nombre: String,
   mensaje: String,
   fecha: {

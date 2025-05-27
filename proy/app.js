@@ -45,15 +45,20 @@ app.use(
       store: new MongoStore({ mongooseConnection: mongoose.connection })
   })
 );
-app.use((req, res, next) => {
-  res.locals.user = req.session.user || null;
-  next();
-});
 
 // Passport middleware
 app.use(passport.initialize()); 
 app.use(passport.session()); 
 app.use(flash()); 
+
+
+app.use((req, res, next) => {
+  if (req.user) {
+    req.session.user = req.user;
+    res.locals.user = req.user; // Para usar en EJS
+  }
+  next();
+});
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
