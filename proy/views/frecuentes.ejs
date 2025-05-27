@@ -6,14 +6,16 @@
     <% include header %>
   </head>
   <body>
+    <div style=" position: relative; z-index: 20;">
     <div style=" margin-left: 2px;">
     <% include pestañausuario %>
     </div>
     <% if (user) { %>
-      <p id = "titulo-principal">
+      <p id = "titulo-principal" style=" position: absolute; top: 85px; left:87.6%; z-index: 21;">
         <%= user.name %> <%= user.surname %>
       </p>
-  <% } %>
+    <% } %>
+    </div>
     <div class="header1">
         <h1 style="margin-top: 60px;">Preguntas Frecuentes</h1>
     </div>

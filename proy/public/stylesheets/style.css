@@ -108,10 +108,17 @@ a {
 .header1 {
   position: fixed;
   top: 0;
-  background: white; /* Fondo blanco */
+  left: 0;
   padding: 15px 15px;
-  z-index: 10; /* Para que esté por encima del contenido */
-  width: 80%;	
+  z-index: 10;
+  width: 80%;
+  width: 150vw;
+  height: 15vh;
+  background-image: url("/images/frequentes_guadarrama.jpg");
+  background-repeat: no-repeat;
+  display: flex;
+  background-size: 80% auto;
+  z-index: 1;
 }
 
 .container1 {
@@ -170,11 +177,6 @@ a {
     justify-content: center; /* Centrar las imágenes */
     gap: 20px; /* Espacio entre imágenes */
     margin-top: 20px;
-}
-
-.imagenes img{
-  width: 45%;
-  height: auto;
 }
 
 .titulorutas{
@@ -278,4 +280,3 @@ a {
   .comentario-form button:hover {
     background-color: #0056b3;
   }
-
