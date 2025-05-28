@@ -5,19 +5,17 @@
     <title>Preguntas frecuentes</title>
     <% include header %>
   </head>
-  <body>
-    <div style=" position: relative; z-index: 20;">
-    <div style=" margin-left: 2px;">
-    <% include pestañausuario %>
-    </div>
+  <body>>
+    <div style="position: relative; z-index: 20;">
+    <div style="top: 20px; right: 50px; position: fixed;"><% include pestañausuario %></div>
     <% if (user) { %>
-      <p id = "titulo-principal" style=" position: absolute; top: 85px; left:87.6%; z-index: 21;">
+      <p id = "titulo-principal" style=" position: fixed; top: 100px; left: 1810px; z-index: 21;">
         <%= user.name %> <%= user.surname %>
       </p>
     <% } %>
     </div>
     <div class="header1">
-        <h1 style="margin-top: 60px;">Preguntas Frecuentes</h1>
+        <h1 class="display-1" style="margin-top: 30px;"><strong>Preguntas Frecuentes</strong></h1>
     </div>
     <div class="container">
         <div class="container1">
@@ -99,7 +97,7 @@
               e.preventDefault();
               
               const targetElement = document.querySelector(this.getAttribute('href'));
-              const headerOffset = 130; // Cambia este valor según la altura de tu header
+              const headerOffset = 150; // Cambia este valor según la altura de tu header
               const elementPosition = targetElement.offsetTop;
               const offsetPosition = elementPosition - headerOffset;
   

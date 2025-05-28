@@ -4,8 +4,8 @@ const path = require('path');
 
 const inputFolder = path.join(__dirname, 'public/images/rutas');
 const outputFolder = path.join(__dirname, 'public/images/rutas/resized');
-const targetWidth = 450;
-const targetHeight = 350;
+const targetWidth = 650;
+const targetHeight = 450;
 
 // Crea la carpeta de salida si no existe
 if (!fs.existsSync(outputFolder)) {

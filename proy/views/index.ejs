@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <% include header %>
-  <body>
+  <body style="background-color: #fafaf0;">
     <script src="/javascripts/randompoints.js"></script>
 
     <style>#map {height:800px} </style>
@@ -23,17 +23,20 @@
     <!-- Linea 18 routes/index.js-->
     <h2>Con <%= title%>, cada sendero es una aventura</h2>
     <!-- Buscador para las busqueda de las diferentes rutas, deberia tener desplegable y las diferentes rutas recomendadas a partir de la escritura-->
-    <form class="form-inline" action="/rutaespecifica" method="GET">
-      <div class="input-group1 w-100 mb-4">
-        <input type="text" class="form-control" name="Buscar" id="search-input" placeholder="Buscar por nombre de ruta">
-      </div>
-    </form>
-    
-    <div id="sugerencias"></div>
+    <div class="busqueda-wrapper">
+      <form class="form-inline" action="/rutaespecifica" method="GET">
+        <div class="input-group1 w-100 mb-4">
+          <input type="text" class="form-control" name="Buscar" id="search-input" placeholder="Buscar por nombre de ruta">
+        </div>
+      </form>
+
+      <div id="sugerencias-container"></div>
+    </div>
 
 <script>
     const buscador = document.getElementById("search-input");
-    const sugerenciasDiv = document.getElementById("sugerencias");
+    const sugerenciasDiv = document.getElementById("sugerencias-container");
+    sugerenciasDiv.classList.add("sugerencias-recuadro");
 
     buscador.addEventListener("input", async function() {
       const texto = this.value.toLowerCase();
@@ -462,7 +465,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
   });
     
     </script> 
-    <div id="map"></div>
+    <div id="map" style="border: 2px solid black; box-sizing: border-box;"></div>
     <% include footer %>
   </body>
 </html>

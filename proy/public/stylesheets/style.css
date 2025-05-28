@@ -103,7 +103,6 @@ a {
 .styled-table tr:nth-child(odd) {
   background-color: #FFFFFF;  /* Blanco */
 }
-
 /*Estilos de sidebar preguntas frecuentes*/
 .header1 {
   position: fixed;
@@ -120,11 +119,17 @@ a {
   background-size: 80% auto;
   z-index: 1;
 }
+.container{
+  margin-top:  20px;
+}
+.container3{
+  margin-top:  0px;
+}
 
 .container1 {
   display: flex;
-  left: 70px;
-  margin-top: 70px;
+  left: 50px;
+  margin-top: 110px;
   position: fixed;
 }
 
@@ -132,9 +137,10 @@ a {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
-  margin-top: 50px;
+  margin-top: 90px;
   padding-left: 50px;
   scroll-margin-top: 150px;
+  margin-left: 20px;
 }
 
 /* Panel lateral */
@@ -153,6 +159,7 @@ a {
 
 .sidebar ul li {
   margin-bottom: 15px;
+  font-size: medium;
 }
 
 .sidebar ul li a {
@@ -182,7 +189,7 @@ a {
 .titulorutas{
   text-align: center; /* Centra el título */
   font-size: 3rem; /* Hace el título más grande */
-  margin-top: 20px; /* Un poco de espacio arriba */
+  margin-top: -30px; /* Un poco de espacio arriba */;
 }
 
 .leaflet-bottom.leaflet-right .leaflet-control {
@@ -280,3 +287,32 @@ a {
   .comentario-form button:hover {
     background-color: #0056b3;
   }
+  .busqueda-wrapper {
+  position: relative;
+  width: 100%; /* o 300px, según diseño */
+ }
+  #sugerencias-container.sugerencias-recuadro {
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  width: 300px; /* ajusta según necesidad */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 10px;
+}
+
+.sugerencia-item {
+  padding: 8px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sugerencia-item:last-child {
+  border-bottom: none;
+}
+
+.sugerencia-item:hover {
+  background-color: #eaeaea;
+}
