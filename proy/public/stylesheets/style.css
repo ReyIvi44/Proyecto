@@ -1,3 +1,9 @@
+.estilo-scroll {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -325,4 +331,44 @@ a {
   font-size: 1.4em;
   margin-top: 10px;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
+
+
+.scroll-btn {
+  display: inline-block;
+  background-color: #343a40; 
+  color: white;
+  margin-top: 300px;
+  position: relative;
+  z-index: 10;
+}
+
+
+.scroll-btn:hover {
+  background-color: #5a6268;
+}
+.hero {
+  position: relative;
+  inset: 0; /* Pegarse a todos los bordes posibles */
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/foto_iniciosesion.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Capa oscura encima de la imagen */
+.hero .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }

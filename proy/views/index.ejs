@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html class=" estilo-scroll">
   <% include header %>
-  <body style="background-color: #fafaf0;">
+  <body class=" estilo-scroll" style="background-color: #fafaf0;">
     <script src="/javascripts/randompoints.js"></script>
 
     <style>#map {height:800px} </style>
 
+ <section class="hero text-white" style="margin: 0; padding: 0; width: 100vw; height: 100vh;">
+    <div class="overlay"></div>
 
-    <!-- Hero Section -->
-  <section class="hero d-flex align-items-center" style="height: 100vh; background-image: url('/images/foto_iniciosesion.jpg'); background-size: cover; background-position: center;">
-    <div class="container text-start text-white">
-      <h1 class="display-3 fw-bold">Título de Bienvenida</h1>
-      <p class="lead fs-4">Este es un subtítulo atractivo para tu página</p>
+    <div class="position-absolute top-50 start-0 translate-middle-y ps-5" style="z-index: 2;">
+      <h1 class="display-3 fw-bold mb-4" style="font-size: 8em;">GUADAWAY</h1>
+      <p class="lead" style="font-size: 1.4em;">cada sendero es una aventura</p>
     </div>
-  </section>
 
-<!-- Línea de separación opcional -->
-  <hr class="border border-black border-2 opacity-100 m-0">
+    <div class="text-center position-absolute bottom-0 start-50 translate-middle-x mb-4" style="z-index: 2;">
+      <a href="#contenido" class="btn btn-dark rounded-pill px-4 py-2 scroll-btn" style="font-size: 1.5rem;">
+        &#x2193; Explora más
+      </a>
+    </div>
+</section>
 
     <!-- Titulo de guadaway linea 18 routes/index.js-->
      <div id="contenido" class="container-fluid">
@@ -28,20 +31,20 @@
     <h2>Con <%= title%>, cada sendero es una aventura</h2>
     </div>
 
-    <div style="position: relative;top: 100px; right: 45px;z-index: 22;"><% include pestañausuario %></div>
+    <div style="position: absolute;top: 1160px; right: 40px;z-index: 22;"><% include pestañausuario %></div>
     <% if (user) { %>
-      <p id = "titulo-principal" style="position: relative; top: 100px; left: 1690px; z-index: 21;">
-        <%= user.name %> <%= user.surname %>
+      <p id = "titulo-principal" style="position: absolute; top: 1240px; left: 1780px; z-index: 21;">
+        <strong><%= user.name %> <%= user.surname %></strong>
       </p>
       <% } else { %>
-        <p style="position: relative; top: 100px; left: 1700px; z-index: 21;">
+        <p style="position: absolute; top: 1240px; left: 1810px; z-index: 21;">
         <strong>Invitado</strong>
         </p>
       <% } %>
     </div>
 
     <!-- Buscador para las busqueda de las diferentes rutas, deberia tener desplegable y las diferentes rutas recomendadas a partir de la escritura-->
-    <div class="busqueda-wrapper">
+    <div class="busqueda-wrapper" style="margin: 20px;">
       <form class="form-inline" action="/rutaespecifica" method="GET">
         <div class="input-group1 w-100 mb-4">
           <input type="text" class="form-control" name="Buscar" id="search-input" placeholder="Buscar por nombre de ruta">
@@ -95,7 +98,7 @@
 </script>
 
   <!-- Filtros, todavia faltan por referenciarlos y crear los que faltan, espaciado, BASE DE DATOS-->
-    <div class="form-group">
+    <div class="form-group" style="margin: 20px;">
       <select id="filtroDuracion" class="col-sm-2">
         <option value="" disabled selected>Duración</option>
         <option value="Menos de una hora">Menos de una hora</option>
@@ -483,7 +486,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
   });
     
     </script> 
-    <div id="map" style="border: 2px solid black; box-sizing: border-box; z-index: 21;"></div>
+    <div id="map" style="border: 2px solid black; box-sizing: border-box; z-index: 21; margin: 20px;"></div>
     <% include footer %>
     </div>
   </body>
