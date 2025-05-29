@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Preguntas frecuentes</title>
+    <title>Ayuda y Preguntas frecuentes</title>
     <% include header %>
   </head>
-  <body>>
+  <body id = "top" style="scroll-behavior: smooth;">
     <div style="position: relative; z-index: 20;">
     <div style="top: 20px; right: 50px; position: fixed;"><% include pestañausuario %></div>
     <% if (user) { %>
-      <p id = "titulo-principal" style=" position: fixed; top: 100px; left: 1810px; z-index: 21;">
+      <p id = "titulo-principal" style=" position: fixed; top: 100px; left: 1770px; z-index: 21;">
         <%= user.name %> <%= user.surname %>
       </p>
       <% } else { %>
@@ -19,7 +19,7 @@
       <% } %>
     </div>
     <div class="header1">
-        <h1 class="display-1" style="margin-top: 30px;"><strong>Preguntas Frecuentes</strong></h1>
+        <h1 class="display-1" style="margin-top: 30px;margin-left: 100px;"><strong>Ayuda y Preguntas Frecuentes</strong></h1>
     </div>
     <div class="container">
         <div class="container1">
@@ -45,55 +45,67 @@
                 <li class="fs-3">Mueve el cursor al punto final y haz clic nuevamente para completar la medición.</li>
                 <li class="fs-3 mb-5">La distancia se mostrará en la pantalla, junto con las coordenadas de los puntos seleccionados.</li> 
             </ol>
+            <hr class="border border-black border-1 opacity-100 w-50 mx-auto my-10" style="margin-top: 50px; margin-bottom: 50px;">
             <h2 id="pregunta2" class="fs-1">¿Existen más mapas base?</h2>
             <p class="fs-3 mt-5">Puedes elegir entre tres tipos de mapas base según tus necesidades:</p>
             <ul class="mb-5">
-                <li class="fs-3"><strong>OpenStreetMap: </strong>Es ideal para ver calles y caminos que vás a encontrarte, ofrece una vista limpia, clara y sencilla.</li>
-                <li class="fs-3"><strong>Satelite (Esri): </strong>Ofrece una vista real del terreno mediante imágenes satelitales. Esta capa es muy util mara identificar el entorno, zonas rutales y naturales con más detalle.</li>
-                <li class="fs-3"><strong>openTopo: </strong>Muestra el relieve del terreno, curvas de nivel y elementos naturales tales como rios y montañas. Si haces rutas de senderismo te aconsejamos echarla un vistazo.</li>
+                <li class="fs-3"><strong>OpenStreetMap: </strong>Es ideal para ver calles y caminos que vas a encontrarte, ofrece una vista limpia, clara y sencilla.</li>
+                <li class="fs-3"><strong>Satélite (Esri): </strong>Ofrece una vista real del terreno mediante imágenes satelitales. Esta capa es muy útil para identificar el entorno, zonas rurales y naturales con más detalle.</li>
+                <li class="fs-3"><strong>openTopo: </strong>Muestra el relieve del terreno, curvas de nivel y elementos naturales tales como ríos y montañas. Si haces rutas de senderismo te aconsejamos echarle un vistazo.</li>
             </ul>
+            <hr class="border border-black border-1 opacity-100 w-50 mx-auto my-10" style="margin-top: 50px; margin-bottom: 50px;">
 
             <h2 id="pregunta3" class="fs-1">¿Es obligatorio registrarse para usar la página?</h2>
             <p class="fs-3 mt-5">¡Para nada! Puedes utilizar el buscador de rutas sin necesidad de estar registrado.</p>
             <p class="fs-3">Por otro lado, te pediremos que te registres si deseas dejar tus comentarios y compartir tu opinión</p>
-            <p class="fs-3">de la ruta que prefiera.</p>
-            <p class="fs-3 mb-5">Todas las personas registradas y no registradas podrán ver tus comentarios, pero solo aquellas que estén regstradas podrán añadir más</p>
+            <p class="fs-3">sobre la ruta que prefieras.</p>
+            <p class="fs-3 mb-5">Todas las personas registradas y no registradas podrán ver tus comentarios, pero solo aquellas que estén registradas podrán añadir más</p>
+
+            <hr class="border border-black border-1 opacity-100 w-50 mx-auto my-10" style="margin-top: 50px; margin-bottom: 50px;">
 
             <h2 id="pregunta4" class="fs-1">Maneras de buscar rutas</h2>
-            <p class="fs-3 mt-5">Existen dos maneras muy sencillas de enconrtar una ruta:</p>
+            <p class="fs-3 mt-5">Existen dos maneras muy sencillas de encontrar una ruta:</p>
             <ul class="fs-3 mb-5">
                 <li><strong>Usa el buscador: </strong>Si conoces el nombre de la ruta, solo tienes que escribirlo en el buscador de rutas</li>
                 <p>A medida que escribes, te mostraremos las 5 mejores coincidencias para que te sea rápido encontrarla.</p>
-                <li><strong>Explora en el mapa: </strong>Si prefieres explorar, puedes navega por eñ mapa. En el momento en el que encuentres</li>
-                <p>una ruta que te aparezca interesante, haz clic sobre ella. Se abrirá un pequeño desplegable con información clave.</p>
+                <li><strong>Explora en el mapa: </strong>Si prefieres explorar, puedes navegar por el mapa. En el momento en el que encuentres</li>
+                <p>una ruta que te parezca interesante, haz clic sobre ella. Se abrirá un pequeño desplegable con información clave.</p>
                 <p>Si quieres más detalles haz clic en el enlace y te llevaremos a su página específica.</p>
             </ul>
+            
+            <hr class="border border-black border-1 opacity-100 w-50 mx-auto my-10" style="margin-top: 50px; margin-bottom: 50px;">
 
             <h2 id="pregunta5" class="fs-1">Filtros</h2>
             <p class="fs-3 mt-5">En la parte superior del mapa puedes encontrar una serie de filtros que puedes ajustar para encontrar las rutas con las características que quieras.</p>
-            <p class="fs-3">Unicamente tienes que seleccionarlas y hacer clic en "Aplicar filtros".</p>
+            <p class="fs-3">Únicamente tienes que seleccionarles y hacer clic en "Aplicar filtros".</p>
             <p class="fs-3">Una vez hecho esto, el mapa se actualizará y te mostrará solo las rutas que cumplen los criterios que has especificado.</p>
             <p class="fs-3">Verás también un mensaje indicando el número de rutas que cumplen con los criterios que has seleccionado. Si por otro lado, no existen rutas que cumplan los parámetros,</p>
             <p class="fs-3 mb-5">te lo haremos saber por un mensaje para que puedas ajustar los filtros</p>
         </div>
     <div>
-    <div class="d-flex justify-content-start align-items-left">
-        <a href="https://www.instagram.com/" title="Instagram">
-            <i class="bi bi-instagram icon"></i>
-        </a>
-        <a href="https://www.facebook.com/?locale=es_ES" title="Facebook">
-            <i class="bi bi-facebook icon"></i>
-        </a>
-        <a href="https://x.com/?lang=es" title="Twitter">
-            <i class="bi bi-twitter-x icon"></i>
-        </a>
+</div>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-end pe-4">
+            <a href="https://www.instagram.com/" title="Instagram" class="me-3">
+            <i class="bi bi-instagram fs-1"></i>
+            </a>
+            <a href="https://www.facebook.com/?locale=es_ES" title="Facebook" class="me-3">
+            <i class="bi bi-facebook fs-1"></i>
+            </a>
+            <a href="https://x.com/?lang=es" title="Twitter">
+            <i class="bi bi-twitter-x fs-1"></i>
+            </a>
         </div>
     </div>
-    <div class="container-fluid text-center">
-        <a href="#" title="To Top">
-        <span ></span>
+    <div class="container-fluid text-center mt-5">
+        <a href="#top" title="Volver arriba" class="btn btn-dark rounded-pill px-4 py-2 mb-3" style="font-size: 1.5rem;">
+            ↑ Volver arriba
         </a>
-        <p><a href = "/">Inicio</a></p>
+        <p>
+            <a href="/" class="text-decoration-none fs-3 fw-bold text-primary">
+            Volver al Inicio
+            </a>
+        </p>
     </div>
     <script>
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {

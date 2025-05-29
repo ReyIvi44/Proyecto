@@ -6,22 +6,40 @@
 
     <style>#map {height:800px} </style>
 
-    <!-- Pestaña y desplegable del usuario-->
-    <% include pestañausuario %>
-    <p id="titulo-principal">
-      <% if (user) { %>
-        <%= user.name %> <%= user.surname %>
-      <% } else { %>
-        Invitado
-      <% } %>
-    </p>
+
+    <!-- Hero Section -->
+  <section class="hero d-flex align-items-center" style="height: 100vh; background-image: url('/images/foto_iniciosesion.jpg'); background-size: cover; background-position: center;">
+    <div class="container text-start text-white">
+      <h1 class="display-3 fw-bold">Título de Bienvenida</h1>
+      <p class="lead fs-4">Este es un subtítulo atractivo para tu página</p>
+    </div>
+  </section>
+
+<!-- Línea de separación opcional -->
+  <hr class="border border-black border-2 opacity-100 m-0">
 
     <!-- Titulo de guadaway linea 18 routes/index.js-->
+     <div id="contenido" class="container-fluid">
+    <div class="titulo-guadaway">
     <h1><%= title %></h1>
     
 
     <!-- Linea 18 routes/index.js-->
     <h2>Con <%= title%>, cada sendero es una aventura</h2>
+    </div>
+
+    <div style="position: relative;top: 100px; right: 45px;z-index: 22;"><% include pestañausuario %></div>
+    <% if (user) { %>
+      <p id = "titulo-principal" style="position: relative; top: 100px; left: 1690px; z-index: 21;">
+        <%= user.name %> <%= user.surname %>
+      </p>
+      <% } else { %>
+        <p style="position: relative; top: 100px; left: 1700px; z-index: 21;">
+        <strong>Invitado</strong>
+        </p>
+      <% } %>
+    </div>
+
     <!-- Buscador para las busqueda de las diferentes rutas, deberia tener desplegable y las diferentes rutas recomendadas a partir de la escritura-->
     <div class="busqueda-wrapper">
       <form class="form-inline" action="/rutaespecifica" method="GET">
@@ -465,7 +483,8 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
   });
     
     </script> 
-    <div id="map" style="border: 2px solid black; box-sizing: border-box;"></div>
+    <div id="map" style="border: 2px solid black; box-sizing: border-box; z-index: 21;"></div>
     <% include footer %>
+    </div>
   </body>
 </html>

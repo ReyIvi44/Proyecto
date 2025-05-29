@@ -203,14 +203,6 @@ a {
   margin-bottom: 0 !important; /* elimina el espacio vertical */
 }
 
-#titulo-principal {
-  position: absolute;
-  top: 130px; /* ajusta según el tamaño de tu icono */
-  left: 1813px;
-  transform: translateX(-50%);
-  font-weight: bold;
-  text-align: center;
-}
 #comentarios {
   max-width: 600px;
   margin-top: 2rem;
@@ -315,4 +307,22 @@ a {
 
 .sugerencia-item:hover {
   background-color: #eaeaea;
+}
+
+.titulo-guadaway {
+  text-align: center;
+  color: rgb(4, 111, 15);
+  padding: 50px 25px 45px;
+}
+
+.titulo-guadaway h1 {
+  font-size: 3em;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+
+.titulo-guadaway h2 {
+  font-size: 1.4em;
+  margin-top: 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }

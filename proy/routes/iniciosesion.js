@@ -18,5 +18,5 @@ const passport = require("passport");
 		failureFlash: true
 	}));
 
-
+	
 module.exports = router;
