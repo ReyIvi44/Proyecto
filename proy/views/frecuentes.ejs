@@ -12,7 +12,11 @@
       <p id = "titulo-principal" style=" position: fixed; top: 100px; left: 1810px; z-index: 21;">
         <%= user.name %> <%= user.surname %>
       </p>
-    <% } %>
+      <% } else { %>
+        <p style="position: fixed; top: 100px; left: 1796px; z-index: 21;">
+        <strong>Invitado</strong>
+        </p>
+      <% } %>
     </div>
     <div class="header1">
         <h1 class="display-1" style="margin-top: 30px;"><strong>Preguntas Frecuentes</strong></h1>
@@ -23,55 +27,55 @@
             <div class="sidebar">
                 <ul>
                     <li><a href="#pregunta1">Herramienta de medición</a></li>
-                    <li><a href="#pregunta2">Herramienta de descarga</a></li>
-                    <li><a href="#pregunta3">Usuarios</a></li>
-                    <li><a href="#pregunta4">Mapas y Rutas</a></li>
-                    <li><a href="#pregunta5">Comentarios</a></li>
+                    <li><a href="#pregunta2">Mapas Base</a></li>
+                    <li><a href="#pregunta3">¿Es obligatorio registrarse para usar la página?</a></li>
+                    <li><a href="#pregunta4">Maneras de buscar rutas</a></li>
+                    <li><a href="#pregunta5">Filtros</a></li>
                 </ul>
             </div>
         </div>
         <!-- Contenido principal con las respuestas -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="margin-right:330px;">
             <h2  id="pregunta1" class="fs-1">Herramienta de medición</h2>
-            <p class="fs-3">La herramienta de medición es una funcionalidad que permite a los usuarios medir distancias en el mapa. Esta herramienta es especialmente útil para calcular distancias entre puntos y obtener información geográfica precisa.</p>
+            <p class="fs-3 mt-5">La herramienta de medición es una funcionalidad que permite a los usuarios medir distancias en el mapa. Esta herramienta es especialmente útil para calcular distancias entre puntos y obtener información geográfica precisa.</p>
             <p class="fs-3">Para utilizar la herramienta de medición, sigue estos pasos:</p>
             <ol>
                 <li class="fs-3">Haz clic en el icono de la herramienta de medición en la barra de herramientas del mapa.</li>
                 <li class="fs-3">Selecciona el punto de inicio haciendo clic en el mapa.</li>
                 <li class="fs-3">Mueve el cursor al punto final y haz clic nuevamente para completar la medición.</li>
-                <li class="fs-3">La distancia se mostrará en la pantalla, junto con las coordenadas de los puntos seleccionados.</li> 
+                <li class="fs-3 mb-5">La distancia se mostrará en la pantalla, junto con las coordenadas de los puntos seleccionados.</li> 
             </ol>
-            <h2 id="pregunta2">Herramienta de descarga</h2>
-            <p>Respuesta a la pregunta 2. Explicación detallada...</p>
+            <h2 id="pregunta2" class="fs-1">¿Existen más mapas base?</h2>
+            <p class="fs-3 mt-5">Puedes elegir entre tres tipos de mapas base según tus necesidades:</p>
+            <ul class="mb-5">
+                <li class="fs-3"><strong>OpenStreetMap: </strong>Es ideal para ver calles y caminos que vás a encontrarte, ofrece una vista limpia, clara y sencilla.</li>
+                <li class="fs-3"><strong>Satelite (Esri): </strong>Ofrece una vista real del terreno mediante imágenes satelitales. Esta capa es muy util mara identificar el entorno, zonas rutales y naturales con más detalle.</li>
+                <li class="fs-3"><strong>openTopo: </strong>Muestra el relieve del terreno, curvas de nivel y elementos naturales tales como rios y montañas. Si haces rutas de senderismo te aconsejamos echarla un vistazo.</li>
+            </ul>
 
-            <h2 id="pregunta3">Usuarios</h2>
-            <p>Respuesta a la pregunta 3. Explicación detallada...</p>
+            <h2 id="pregunta3" class="fs-1">¿Es obligatorio registrarse para usar la página?</h2>
+            <p class="fs-3 mt-5">¡Para nada! Puedes utilizar el buscador de rutas sin necesidad de estar registrado.</p>
+            <p class="fs-3">Por otro lado, te pediremos que te registres si deseas dejar tus comentarios y compartir tu opinión</p>
+            <p class="fs-3">de la ruta que prefiera.</p>
+            <p class="fs-3 mb-5">Todas las personas registradas y no registradas podrán ver tus comentarios, pero solo aquellas que estén regstradas podrán añadir más</p>
 
-            <h2 id="pregunta4">Mapas y Rutas</h2>
-            <p>Respuesta a la pregunta 4. Explicación detallada...</p>
+            <h2 id="pregunta4" class="fs-1">Maneras de buscar rutas</h2>
+            <p class="fs-3 mt-5">Existen dos maneras muy sencillas de enconrtar una ruta:</p>
+            <ul class="fs-3 mb-5">
+                <li><strong>Usa el buscador: </strong>Si conoces el nombre de la ruta, solo tienes que escribirlo en el buscador de rutas</li>
+                <p>A medida que escribes, te mostraremos las 5 mejores coincidencias para que te sea rápido encontrarla.</p>
+                <li><strong>Explora en el mapa: </strong>Si prefieres explorar, puedes navega por eñ mapa. En el momento en el que encuentres</li>
+                <p>una ruta que te aparezca interesante, haz clic sobre ella. Se abrirá un pequeño desplegable con información clave.</p>
+                <p>Si quieres más detalles haz clic en el enlace y te llevaremos a su página específica.</p>
+            </ul>
 
-            <h2 id="pregunta5">Comentarios</h2>
-            <p>Respuesta a la pregunta 5. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            <p>Respuesta a la pregunta 1. Explicación detallada...</p>
-            
+            <h2 id="pregunta5" class="fs-1">Filtros</h2>
+            <p class="fs-3 mt-5">En la parte superior del mapa puedes encontrar una serie de filtros que puedes ajustar para encontrar las rutas con las características que quieras.</p>
+            <p class="fs-3">Unicamente tienes que seleccionarlas y hacer clic en "Aplicar filtros".</p>
+            <p class="fs-3">Una vez hecho esto, el mapa se actualizará y te mostrará solo las rutas que cumplen los criterios que has especificado.</p>
+            <p class="fs-3">Verás también un mensaje indicando el número de rutas que cumplen con los criterios que has seleccionado. Si por otro lado, no existen rutas que cumplan los parámetros,</p>
+            <p class="fs-3 mb-5">te lo haremos saber por un mensaje para que puedas ajustar los filtros</p>
         </div>
-    </div>
     <div>
     <div class="d-flex justify-content-start align-items-left">
         <a href="https://www.instagram.com/" title="Instagram">
