@@ -289,14 +289,15 @@ a {
   position: relative;
   width: 100%; /* o 300px, según diseño */
  }
-  #sugerencias-container.sugerencias-recuadro {
-  border: 2px solid #333;
-  border-radius: 8px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  width: 300px; /* ajusta según necesidad */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  margin-top: 10px;
+#sugerencias-container {
+  display: none;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 250px;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .sugerencia-item {
@@ -339,7 +340,7 @@ a {
   display: inline-block;
   background-color: #343a40; 
   color: white;
-  margin-top: 300px;
+  margin-top: 100px;
   position: relative;
   z-index: 10;
 }
@@ -358,8 +359,6 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
-  margin: 0 !important;
-  padding: 0 !important;
 }
 
 /* Capa oscura encima de la imagen */

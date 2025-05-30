@@ -10,12 +10,12 @@
     <div class="overlay"></div>
 
     <div class="position-absolute top-50 start-0 translate-middle-y ps-5" style="z-index: 2;">
-      <h1 class="display-3 fw-bold mb-4" style="font-size: 8em;">GUADAWAY</h1>
-      <p class="lead" style="font-size: 1.4em;">cada sendero es una aventura</p>
+      <h1 class="display-3 fw-bold mb-4" style="z-index: 2; position:relative; font-size: 8em; margin-top: 120px;">GUADAWAY</h1>
+      <p class="lead" style="z-index: 2; position:relative; font-size: 1.4em;">cada sendero es una aventura</p>
     </div>
 
     <div class="text-center position-absolute bottom-0 start-50 translate-middle-x mb-4" style="z-index: 2;">
-      <a href="#contenido" class="btn btn-dark rounded-pill px-4 py-2 scroll-btn" style="font-size: 1.5rem;">
+      <a href="#contenido" class="btn btn-dark rounded-pill px-4 py-2 scroll-btn" style="font-size: 1.5rem; bottom: 150px;">
         &#x2193; Explora más
       </a>
     </div>
@@ -23,21 +23,15 @@
 
     <!-- Titulo de guadaway linea 18 routes/index.js-->
      <div id="contenido" class="container-fluid">
-    <div class="titulo-guadaway">
-    <h1><%= title %></h1>
     
 
-    <!-- Linea 18 routes/index.js-->
-    <h2>Con <%= title%>, cada sendero es una aventura</h2>
-    </div>
-
-    <div style="position: absolute;top: 1160px; right: 40px;z-index: 22;"><% include pestañausuario %></div>
+    <div style="position: absolute;top: 960px; right: 40px;z-index: 22;"><% include pestañausuario %></div>
     <% if (user) { %>
-      <p id = "titulo-principal" style="position: absolute; top: 1240px; left: 1780px; z-index: 21;">
+      <p id = "titulo-principal" style="position: absolute; top: 1040px; left: 1780px; z-index: 21;">
         <strong><%= user.name %> <%= user.surname %></strong>
       </p>
       <% } else { %>
-        <p style="position: absolute; top: 1240px; left: 1810px; z-index: 21;">
+        <p style="position: absolute; top: 1040px; left: 1807px; z-index: 21;">
         <strong>Invitado</strong>
         </p>
       <% } %>
@@ -55,48 +49,57 @@
     </div>
 
 <script>
-    const buscador = document.getElementById("search-input");
-    const sugerenciasDiv = document.getElementById("sugerencias-container");
-    sugerenciasDiv.classList.add("sugerencias-recuadro");
+  const buscador = document.getElementById("search-input");
+  const sugerenciasDiv = document.getElementById("sugerencias-container");
+  sugerenciasDiv.classList.add("sugerencias-recuadro");
 
-    buscador.addEventListener("input", async function() {
-      const texto = this.value.toLowerCase();
-      sugerenciasDiv.innerHTML = "";  // Limpiar las sugerencias previas
+  buscador.addEventListener("input", async function () {
+    const texto = this.value.toLowerCase();
+    sugerenciasDiv.innerHTML = ""; // Limpiar sugerencias anteriores
 
-      // No hacer nada si el campo está vacío
-      if (texto.length === 0) {
+    if (texto.length === 0) {
+      sugerenciasDiv.style.display = "none"; // Ocultar si está vacío
+      return;
+    }
+
+    try {
+      const res = await fetch(`/autocomplete?query=${encodeURIComponent(texto)}`);
+      const resultados = await res.json();
+
+      if (resultados.length === 0) {
+        sugerenciasDiv.style.display = "none"; // Ocultar si no hay resultados
         return;
       }
 
-      try {
-        // Hacer la solicitud al servidor para obtener las rutas que coinciden con el texto
-        const res = await fetch(`/autocomplete?query=${encodeURIComponent(texto)}`);
-        const resultados = await res.json();
+      // Mostrar contenedor de sugerencias
+      sugerenciasDiv.style.display = "block";
 
-        // Mostrar las sugerencias (máximo 5)
-        resultados.slice(0, 5).forEach(ruta => {
-          const div = document.createElement("div");
-          div.innerHTML = `<strong>${ruta.Nombre}</strong> - Dificultad: ${ruta.Dificultad} - Duración: ${ruta["Duración (h)"]}h`;
-          div.classList.add("sugerencia-item");
+      resultados.slice(0, 5).forEach(ruta => {
+        const div = document.createElement("div");
+        div.innerHTML = `<strong>${ruta.Nombre}</strong> - Dificultad: ${ruta.Dificultad} - Duración: ${ruta["Duración (h)"]}h`;
+        div.classList.add("sugerencia-item");
 
-          // Cuando se haga clic en una sugerencia, redirigir a la página de la ruta
-          div.addEventListener("click", function() {
-          // Asegurarse de que el nombre de la ruta tiene el formato correcto (utilizar encodeURIComponent)
-          const nombreRuta = encodeURIComponent(ruta.Nombre);  // Asegúrate de que esta variable tenga el formato correcto
-
-          // Redirigir a la página específica de la ruta
+        div.addEventListener("click", function () {
+          const nombreRuta = encodeURIComponent(ruta.Nombre);
           window.location.href = `/rutaespecifica/${nombreRuta}`;
         });
 
-          sugerenciasDiv.appendChild(div);
-        });
+        sugerenciasDiv.appendChild(div);
+      });
 
-      } catch (error) {
-        console.error("Error al buscar rutas:", error);
-      }
-    });
+    } catch (error) {
+      console.error("Error al buscar rutas:", error);
+      sugerenciasDiv.style.display = "none"; // Ocultar si hay error
+    }
+  });
+
+  // También puedes ocultar sugerencias si se hace clic fuera
+  document.addEventListener("click", function (event) {
+    if (!sugerenciasDiv.contains(event.target) && event.target !== buscador) {
+      sugerenciasDiv.style.display = "none";
+    }
+  });
 </script>
-
   <!-- Filtros, todavia faltan por referenciarlos y crear los que faltan, espaciado, BASE DE DATOS-->
     <div class="form-group" style="margin: 20px;">
       <select id="filtroDuracion" class="col-sm-2">
@@ -486,7 +489,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
   });
     
     </script> 
-    <div id="map" style="border: 2px solid black; box-sizing: border-box; z-index: 21; margin: 20px;"></div>
+    <div id="map" style="border: 2px solid black; box-sizing: border-box; z-index: 21; margin: 40px;"></div>
     <% include footer %>
     </div>
   </body>
