@@ -11,7 +11,6 @@ const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger_output.json')
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 //Nuevo
 var registroRouter = require('./routes/registro');
 var iniciosesionRouter = require('./routes/iniciosesion');
@@ -74,7 +73,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 //Nuevo
 app.use('/registro', registroRouter);
 app.use('/iniciosesion', iniciosesionRouter);

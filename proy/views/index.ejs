@@ -22,10 +22,10 @@
 </section>
 
     <!-- Titulo de guadaway linea 18 routes/index.js-->
-     <div id="contenido" class="container-fluid">
+
     
 
-    <div style="position: absolute;top: 960px; right: 40px;z-index: 22;"><% include pestañausuario %></div>
+    <div id ="contenido" style="position: absolute;top: 960px; right: 40px;z-index: 20;"><% include pestañausuario %></div>
     <% if (user) { %>
       <p id = "titulo-principal" style="position: absolute; top: 1040px; left: 1780px; z-index: 21;">
         <strong><%= user.name %> <%= user.surname %></strong>
@@ -35,7 +35,7 @@
         <strong>Invitado</strong>
         </p>
       <% } %>
-    </div>
+    
 
     <!-- Buscador para las busqueda de las diferentes rutas, deberia tener desplegable y las diferentes rutas recomendadas a partir de la escritura-->
     <div class="busqueda-wrapper" style="margin: 20px;">
@@ -101,7 +101,7 @@
   });
 </script>
   <!-- Filtros, todavia faltan por referenciarlos y crear los que faltan, espaciado, BASE DE DATOS-->
-    <div class="form-group" style="margin: 20px;">
+    <div class="form-group" style="margin: 20px; padding-top: 20px;">
       <select id="filtroDuracion" class="col-sm-2">
         <option value="" disabled selected>Duración</option>
         <option value="Menos de una hora">Menos de una hora</option>
