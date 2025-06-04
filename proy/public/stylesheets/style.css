@@ -93,7 +93,10 @@ a {
 
 /*Tabla del popup de rutas*/
 .styled-table {
-  width: 100%;
+  width: auto;               /* En lugar de 100%, que la tabla se ajuste al contenido */
+  min-width: 300px;          /* Mínimo deseado */
+  max-width: 100%;           /* No exceder el ancho del popup */
+  font-size: 1.2rem;
   border-collapse: collapse;
 }
 
@@ -396,4 +399,10 @@ a {
   /* Cuando esté abierto, se mostrará */
   #user-widget .dropdown-content.active {
     display: block;
+  }
+  .form-group select,
+  .form-group button {
+    font-size: 1.2rem; /* Aumenta el tamaño de la fuente */
+    padding: 5px 10px; /* Aumenta el tamaño del botón y el desplegable */
+    border-radius: 4px; /* Bordes más redondeados (opcional) */
   }

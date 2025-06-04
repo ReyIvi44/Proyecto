@@ -5,7 +5,7 @@
     <title>Ayuda y Preguntas frecuentes</title>
     <% include header %>
   </head>
-  <body id = "top" style="scroll-behavior: smooth;">
+  <body id = "top" class= "preguntas-frecuentes" style="scroll-behavior: smooth;">
     <div style="position: relative; z-index: 20;">
     <!-- Contenedor fijo y alineado a la derecha para la imagen y el dropdown -->
     <div id="user-widget" style="position: fixed; top: 20px; right: 50px; z-index: 1000;">
@@ -130,18 +130,33 @@
   </script>
 
   <script>
-  function toggleDropdown() {
-    const dropdown = document.getElementById('dropdown');
-    dropdown.classList.toggle('active');
-  }
+  document.addEventListener("DOMContentLoaded", function () {
+  const esFrecuentes = document.body.classList.contains("preguntas-frecuentes");
 
-  // Opcional: cerrar dropdown si se hace clic fuera
-  document.addEventListener('click', function(event) {
-    const widget = document.getElementById('user-widget');
-    if (!widget.contains(event.target)) {
-      document.getElementById('dropdown')?.classList.remove('active');
+  if (esFrecuentes) {
+    const dropdown = document.getElementById("dropdown");
+    const circleImg = document.querySelector(".circle-img");
+    const titulo = document.getElementById("titulo-principal");
+
+    function toggleDropdownFrecuentes() {
+      dropdown.classList.toggle("active");
+      if (dropdown.classList.contains("active")) {
+        titulo.style.display = "none";
+      } else {
+        titulo.style.display = "block";
+      }
     }
-  });
+
+    circleImg.addEventListener("click", toggleDropdownFrecuentes);
+
+    document.addEventListener("click", function (event) {
+      if (!dropdown.contains(event.target) && !circleImg.contains(event.target)) {
+        dropdown.classList.remove("active");
+        titulo.style.display = "block";
+      }
+    });
+  }
+});
 </script>
   </body>
 

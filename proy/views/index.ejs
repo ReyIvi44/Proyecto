@@ -244,7 +244,7 @@ function getEstiloYPopup() {
     },
     onEachFeature: function(feature, layer) {
       // Generar la tabla con los atributos
-      var tableHtml = "<center><table class='styled-table' style='width:100%; border-collapse: collapse;'><tr><th colspan='2' align='center'><em>Atributos</em></th></tr>";
+      var tableHtml = "<center><table class='styled-table'><tr><th colspan='2' align='center'><em>Atributos</em></th></tr>";
       tableHtml += generateTableRow('Parque Nacional', feature.properties['Parque Nacional']);
       tableHtml += generateTableRow('Nombre', feature.properties['Nombre']);
       tableHtml += generateTableRow('Número', feature.properties['Número']);
@@ -261,7 +261,9 @@ function getEstiloYPopup() {
       tableHtml += generateTableRow('Ver más información', `<a href="${rutaUrl}" target="_blank">Ver ruta completa</a>`);
 
       tableHtml += "</table></center>";
-      layer.bindPopup("<strong>" + feature.properties.Nombre + "</strong><br/>" + tableHtml);
+      layer.bindPopup("</strong><br/>" + tableHtml, {
+      maxWidth: 400  // o el valor que prefieras
+    });
     }
   };
 }
