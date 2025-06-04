@@ -7,17 +7,21 @@
   </head>
   <body id = "top" style="scroll-behavior: smooth;">
     <div style="position: relative; z-index: 20;">
-    <div style="top: 20px; right: 50px; position: fixed;"><% include pestañausuario %></div>
-    <% if (user) { %>
-      <p id = "titulo-principal" style=" position: fixed; top: 100px; left: 1770px; z-index: 21;">
-        <%= user.name %> <%= user.surname %>
-      </p>
-      <% } else { %>
-        <p style="position: fixed; top: 100px; left: 1796px; z-index: 21;">
-        <strong>Invitado</strong>
-        </p>
-      <% } %>
+    <!-- Contenedor fijo y alineado a la derecha para la imagen y el dropdown -->
+    <div id="user-widget" style="position: fixed; top: 20px; right: 50px; z-index: 1000;">
+        <% include pestañausuario %>
     </div>
+
+    <% if (user) { %>
+        <p id="titulo-principal" style="top: 120px; right: 60px; position: fixed; z-index: 900;">
+            <%= user.name %> <%= user.surname %>
+        </p>
+    <% } else { %>
+        <p style="top: 120px; right: 70px; position: fixed; z-index: 900;">
+            <strong>Invitado</strong>
+        </p>
+    <% } %>
+</div>
     <div class="header1">
         <h1 class="display-1" style="margin-top: 30px;margin-left: 100px;"><strong>Ayuda y Preguntas Frecuentes</strong></h1>
     </div>
@@ -124,6 +128,21 @@
           });
       });
   </script>
+
+  <script>
+  function toggleDropdown() {
+    const dropdown = document.getElementById('dropdown');
+    dropdown.classList.toggle('active');
+  }
+
+  // Opcional: cerrar dropdown si se hace clic fuera
+  document.addEventListener('click', function(event) {
+    const widget = document.getElementById('user-widget');
+    if (!widget.contains(event.target)) {
+      document.getElementById('dropdown')?.classList.remove('active');
+    }
+  });
+</script>
   </body>
 
 </html>

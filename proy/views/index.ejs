@@ -6,7 +6,7 @@
 
     <style>#map {height:800px} </style>
 
- <section class="hero text-white" style="margin: 0; padding: 0; width: 100vw; height: 100vh;">
+ <section class="hero text-white" style="margin: 0; padding: 0; width: 100vw; height: 100vh;margin-bottom: 150px;">
     <div class="overlay"></div>
 
     <div class="position-absolute top-50 start-0 translate-middle-y ps-5" style="z-index: 2;padding-bottom: 400px;">
@@ -23,15 +23,13 @@
 
     <!-- Titulo de guadaway linea 18 routes/index.js-->
 
-    
-
-    <div id ="contenido" style="position: absolute;top: 960px; right: 40px;z-index: 22;"><% include pestañausuario %></div>
+    <div id ="contenido" style="position: relative; margin-top:-50px; z-index: 22; display: flex; flex-direction: row-reverse;right: 50px;"><% include pestañausuario %></div>
     <% if (user) { %>
-      <p id = "titulo-principal" style="position: absolute; top: 1040px; left: 1780px; z-index: 21;">
+      <p id = "titulo-principal" style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 60px;">
         <strong><%= user.name %> <%= user.surname %></strong>
       </p>
       <% } else { %>
-        <p style="position: absolute; top: 1040px; left: 1807px; z-index: 21;">
+        <p style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 68px;">
         <strong>Invitado</strong>
         </p>
       <% } %>

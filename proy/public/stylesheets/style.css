@@ -371,3 +371,29 @@ a {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
+
+
+
+ /* Asegura que el contenedor de usuario tenga posición relativa */
+  #user-widget {
+    position: fixed;
+    top: 20px;
+    right: 50px;
+    z-index: 1000;
+  }
+
+  /* Asegura que el dropdown se posicione correctamente */
+  #user-widget .dropdown-content {
+    right: 0;
+    width: 500px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1001;
+    display: none;
+  }
+
+  /* Cuando esté abierto, se mostrará */
+  #user-widget .dropdown-content.active {
+    display: block;
+  }
