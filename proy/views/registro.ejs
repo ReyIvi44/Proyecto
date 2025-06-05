@@ -53,9 +53,9 @@
             var password = document.getElementById("password").value;
             var confirmPassword = document.getElementById("confirmar-contraseña").value;
   
-            // Si las contraseñas no coinciden, previene el envío del formulario y muestra un mensaje
+            // Si las contraseñas no coinciden  muestra un mensaje
             if (password !== confirmPassword) {
-              event.preventDefault();  // Evita que se envíe el formulario
+              event.preventDefault();  // Evita que se envíe el formulario si son diferentes
               alert("Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.");
             }
           });

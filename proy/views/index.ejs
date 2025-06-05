@@ -6,8 +6,8 @@
 
     <style>#map {height:800px} </style>
 
- <section class="hero text-white" style="margin: 0; padding: 0; width: 100vw; height: 100vh;margin-bottom: 150px;">
-    <div class="overlay"></div>
+ <section class="hero text-white" style="margin: 0; padding: 0; width: 100vw; height: 100vh;margin-bottom: 150px;"> <!-- Imagen de bienvenida-->
+    <div class="overlay"></div> <!-- Capa oscura transparente sobre la imagen para destacar el texto-->
 
     <div class="position-absolute top-50 start-0 translate-middle-y ps-5" style="z-index: 2;padding-bottom: 400px;">
       <h1 class="display-3 fw-bold mb-4" style="z-index: 2; position:relative; font-size: 8em;padding-left: 200px ;">GUADAWAY</h1>
@@ -15,27 +15,27 @@
     </div>
 
     <div class="text-center position-absolute bottom-0 start-50 translate-middle-x mb-4" style="z-index: 2;">
-      <a href="#contenido" class="btn btn-dark rounded-pill px-5 py-4 scroll-btn" style="font-size: 1.8rem;bottom: 150px;">
+      <a href="#contenido" class="btn btn-dark rounded-pill px-5 py-4 scroll-btn" style="font-size: 1.8rem;bottom: 150px;"><!-- Boton para desplazar la imagen-->
         &#x2193; Explora más
       </a>
     </div>
 </section>
 
-    <!-- Titulo de guadaway linea 18 routes/index.js-->
+    <!-- A continuacion, incluimos la imagen del usuario con su desplegable, encluimos la plantilla de pestañausuario.ejs-->
 
     <div id ="contenido" style="position: relative; margin-top:-50px; z-index: 22; display: flex; flex-direction: row-reverse;right: 50px;"><% include pestañausuario %></div>
-    <% if (user) { %>
+    <% if (user) { %> <!-- Si el usuario esta iniciado, se muestra el nombre y el apellido bajo la imagen de usuario-->
       <p id = "titulo-principal" style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 40px;">
         <strong><%= user.name %> <%= user.surname %></strong>
       </p>
-      <% } else { %>
+      <% } else { %> <!-- Si el usuario no esta iniciado, bajo la imagen marca invitado-->
         <p style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 68px;">
         <strong>Invitado</strong>
         </p>
       <% } %>
     
 
-    <!-- Buscador para las busqueda de las diferentes rutas, deberia tener desplegable y las diferentes rutas recomendadas a partir de la escritura-->
+    <!-- Buscador para las busqueda de las diferentes rutas, desplegable con autocompletado de las rutas con las 5 rutas mas similares por escritura-->
     <div class="busqueda-wrapper" style="margin: 20px;">
       <form class="form-inline" action="/rutaespecifica" method="GET">
         <div class="input-group1 w-100 mb-4">
@@ -69,12 +69,12 @@
         return;
       }
 
-      // Mostrar contenedor de sugerencias
+      // Mostrar contenedor de sugerencias, se mostrara el nombre, dificultad de la ruta y su duracion
       sugerenciasDiv.style.display = "block";
 
       resultados.slice(0, 5).forEach(ruta => {
         const div = document.createElement("div");
-        div.innerHTML = `<strong>${ruta.Nombre}</strong> - Dificultad: ${ruta.Dificultad} - Duración: ${ruta["Duración (h)"]}h`;
+        div.innerHTML = `<strong>${ruta.Nombre}</strong> - Dificultad: ${ruta.Dificultad} - Duración: ${ruta["Duración (h)"]}h`; 
         div.classList.add("sugerencia-item");
 
         div.addEventListener("click", function () {
@@ -87,18 +87,18 @@
 
     } catch (error) {
       console.error("Error al buscar rutas:", error);
-      sugerenciasDiv.style.display = "none"; // Ocultar si hay error
+      sugerenciasDiv.style.display = "none"; //Se oculta si hay error
     }
   });
 
-  // También puedes ocultar sugerencias si se hace clic fuera
+  // Si se hace clic fuera del buscador se oculta
   document.addEventListener("click", function (event) {
     if (!sugerenciasDiv.contains(event.target) && event.target !== buscador) {
       sugerenciasDiv.style.display = "none";
     }
   });
 </script>
-  <!-- Filtros, todavia faltan por referenciarlos y crear los que faltan, espaciado, BASE DE DATOS-->
+  <!-- Filtros-->
     <div class="form-group" style="margin: 20px; padding-top: 20px;">
       <select id="filtroDuracion" class="col-sm-2">
         <option value="" disabled selected>Duración</option>
@@ -145,12 +145,23 @@
       $( document ).ready(function(){
         $('#registrar').on('submit', function (event) {
           event.preventDefault();
-          var randomGeoPoints = generateRandomPoints({ 'lat': 40.790, 'lng': -4.010 }, 5000, 1);
-          randomGeoPoints = generateRandomPoints({'lat': randomGeoPoints[0][1], 'lng': randomGeoPoints[0][0]}, 1000, 5);
-          url = $(this).attr("action");
+
+          // Obtiene todas las rutas de la capa como GeoJSON
+          var rutasGeoJSON = rutasLayerGroup.toGeoJSON();
+
+          // Serializa el GeoJSON para enviarlo al servidor
+          var rutasString = JSON.stringify(rutasGeoJSON);
+
+          // URL del formulario
+          var url = $(this).attr("action");
+
+          // Serializa los datos del formulario
           var postData = $(this).serializeArray();
-          postData.push({ name: 'ruta', value: JSON.stringify(randomGeoPoints) });
-          console.log (JSON.stringify(postData));
+
+          // Añade el campo 'ruta' con los datos reales (no aleatorios)
+          postData.push({ name: 'ruta', value: rutasString });
+
+          // Enviar por AJAX
           $.ajax({
             type: "POST",
             url: url,
@@ -158,8 +169,8 @@
             success: function () {
               location.reload();
             }
-          });          
-        });
+          });
+        }); // A continuacion se crean los tres mapas base que se podran utilizar
         const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap'
         });
@@ -197,7 +208,7 @@
           useLatLngOrder: true
         }));
         
-        
+        //Crea el control de mapas base, rutas y puntos de interes
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map)
@@ -215,12 +226,9 @@
           'Puntos de interés': puntosInteresLayerGroup
         },
         { collapsed: true
-         } // Opcional: mostrar el panel abierto por defecto
+         }
       ).addTo(map);
-      /* Invocamos una petición ajax para recuperar el geojson 
-      *  una vez descargado creamos una capa geojson de leaflet y 
-      *  la añadimos al mapa 
-      */ 
+
 // Define la función globalmente para que sea accesible en otros contextos
 function getEstiloYPopup() {
   return {
@@ -261,7 +269,7 @@ function getEstiloYPopup() {
 
       tableHtml += "</table></center>";
       layer.bindPopup("</strong><br/>" + tableHtml, {
-      maxWidth: 400  // o el valor que prefieras
+      maxWidth: 400
     });
     }
   };
@@ -271,7 +279,7 @@ function getEstiloYPopup() {
 $.getJSON("/geojson", function(data) {
   // Procesar los datos del GeoJSON
   const allFeatures = data.flatMap(r => r.features);
-
+// Mensaje que informa sobre cuantas rutas ha encontrado o si nu existen con estas características
   if (allFeatures.length === 0) {
     console.log('❌ No se encontraron rutas iniciales.');
   } else {
@@ -303,7 +311,7 @@ fetch('/puntos-interes')
     if (!data.features) return console.warn("No hay puntos de interés.");
 
     const icono = L.icon({
-      iconUrl: 'images/door-open.svg', // ruta de tu icono
+      iconUrl: 'images/door-open.svg', // ruta l icono de entradas
       iconSize: [25, 25],
       iconAnchor: [12, 25],
       popupAnchor: [0, -25]
@@ -312,7 +320,7 @@ fetch('/puntos-interes')
     data.features.forEach(feature => {
       const coords = feature.geometry.coordinates;
       const props = feature.properties;
-
+    //Pop up de los puntos de interes
       const marker = L.marker([coords[1], coords[0]], { icon: icono }).bindPopup(`
         <strong>${props.DS_CENTRO}</strong><br>
         ${props.DS_MUNICIP}<br>
@@ -323,7 +331,7 @@ fetch('/puntos-interes')
       puntosInteresLayerGroup.addLayer(marker);
     });
 
-    puntosInteresLayerGroup.addTo(map); // asegúrate que 'map' ya está declarado
+    puntosInteresLayerGroup.addTo(map); // Se incluyen los puntos de interes
   })
   .catch(err => console.error("❌ Error cargando puntos de interés:", err));
 
@@ -351,7 +359,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
     "De 15 a 20 km": [15, 20],
     "Más de 20 km": [20, 99]
   };
-
+ // Se preparan los parámetros de filtrado
   if (duracion && mapaDuracion[duracion]) {
     const [minDur, maxDur] = mapaDuracion[duracion];
     params.append('minDuracion', minDur);
@@ -406,7 +414,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
   })
   .catch(err => console.error('Error al aplicar filtros:', err));
 });
-
+// Personalizar la herramienta de descarga del mapa
     L.easyPrint({
           title: 'Descargar mapa',
           position: 'topleft',
@@ -438,11 +446,11 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
     // Función para generar filas de la tabla
     function generateTableRow(label, value) {
       return "<tr><th style='padding: 8px; text-align: left;'>" + label + "</th><td style='padding: 8px;'>" + value + "</td></tr>";
-    }
+    }// A continuacion se crea la herramienta de medicion
     $('#btn-medir').on('click', () => {
     midiendo = !midiendo;
     puntosMedicion = [];
-
+   // Comprueba si ya existe una línea de medicion en el mapa
     if (lineaMedicion) {
       map.removeLayer(lineaMedicion);
       lineaMedicion = null;
@@ -463,7 +471,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
     if (!midiendo) return;
 
     puntosMedicion.push(e.latlng);
-
+    // Comprobación del número de cliks en el mapa para indicar el marcador
     if (puntosMedicion.length === 1) {
       marcadorInicio = L.marker(e.latlng).addTo(map);
     }
@@ -474,7 +482,7 @@ document.getElementById('aplicarFiltros').addEventListener('click', () => {
 
       const distancia = map.distance(puntosMedicion[0], puntosMedicion[1]);
       const distanciaKm = (distancia / 1000).toFixed(2);
-
+      // Muestra un pop up con la distancia calculada
       L.popup()
         .setLatLng(puntosMedicion[1])
         .setContent(`Distancia: ${distanciaKm} km`)
