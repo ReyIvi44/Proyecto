@@ -19,7 +19,6 @@ const LocalStrategy = require("passport-local").Strategy;
   });
 
   //REGISTRO
-  // Signup
   passport.use('local-registro', new LocalStrategy({
     // by default, local strategy uses username and password, we will override with email
     usernameField: 'email',
@@ -35,7 +34,7 @@ const LocalStrategy = require("passport-local").Strategy;
         var newUser = new User();
         newUser.name = req.body.nombre;
         newUser.surname = req.body.apellidos;
-        newUser.telefono = req.body.telefono;  //si el parametro de entrada req.body.city no está, no se incluye como campo en MongoDB
+        newUser.telefono = req.body.telefono; 
         newUser.email = email;
         newUser.password = newUser.generateHash(password);
         newUser.save().then(() => {         
@@ -53,9 +52,6 @@ const LocalStrategy = require("passport-local").Strategy;
 
 
   //INICIO DE SESION
-  // login
-  // we are using named strategies since we have one for login and one for signup
-  // by default, if there was no name, it would just be called 'local
   passport.use('local-iniciosesion', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',

@@ -1,4 +1,4 @@
-.estilo-scroll {
+.estilo-scroll { /* La idea de este estilo es que el elemento ocupe todo el espacio disponible en la pantalla*/
   margin: 0;
   padding: 0;
   width: 100%;
@@ -21,7 +21,7 @@ a {
   font-size: 40px;
   margin: 0 15px;
 }
-/* Margenes de registro.ejs*/
+/* Margenes de registro.ejs e iniciosesion.ejs*/
 .cuadrado {
   position: absolute;
   top: 20%;
@@ -34,7 +34,7 @@ a {
   border-radius: 12px;
   padding: 30px;
 }
-/* Botón de registro.ejs*/
+/* Botón de registrarse en registro.ejs y de iniciar sesion en iniciosesion.ejs*/
 .registrarse {
   display: flex;
   justify-content: center; 
@@ -42,7 +42,7 @@ a {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-/* Usuario */
+/* Imagen Usuario */
 .circle-img {
   width: 80px;  /* Tamaño del círculo */
   height: 80px;
@@ -55,7 +55,7 @@ a {
   height: 100%;
   object-fit: cover;
 }
-.dropdown-content {
+.dropdown-content { /* Desplegable de usuario */
   z-index: 9999;
   display: none;
   margin-left: 1300px;
@@ -84,18 +84,18 @@ a {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.logout-button{
+.logout-button{ /*Boton de cerrar sesion*/
   display: flex;
   justify-content: center; 
   align-items: center; 
   margin-top: 270px;
 }
 
-/*Tabla del popup de rutas*/
+  /*Tabla del popup de rutas*/
 .styled-table {
-  width: auto;               /* En lugar de 100%, que la tabla se ajuste al contenido */
-  min-width: 300px;          /* Mínimo deseado */
-  max-width: 100%;           /* No exceder el ancho del popup */
+  width: auto;       /* En lugar de 100%, que la tabla se ajuste al contenido */
+  min-width: 300px;          
+  max-width: 100%;           
   font-size: 1.2rem;
   border-collapse: collapse;
 }
@@ -106,13 +106,14 @@ a {
 }
 
 .styled-table tr:nth-child(even) {
-  background-color: #E3E3F3;  /* Gris claro */
+  background-color: #E3E3F3; 
 }
 
 .styled-table tr:nth-child(odd) {
-  background-color: #FFFFFF;  /* Blanco */
+  background-color: #FFFFFF;  
 }
-/*Estilos de sidebar preguntas frecuentes*/
+
+/*Estilos de sidebar preguntas frecuentes en frecuentes.ejs*/
 .header1 {
   position: fixed;
   top: 0;
@@ -142,7 +143,7 @@ a {
   position: fixed;
 }
 
-.content-wrapper {
+.content-wrapper { /*Estilos de sidebar preguntas frecuentes en frecuentes.ejs*/
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
@@ -152,7 +153,7 @@ a {
   margin-left: 20px;
 }
 
-/* Panel lateral */
+/* Panel lateral de frecuentes.ejs*/
 .sidebar {
   width: 250px;
   background: #f4f4f4;
@@ -189,7 +190,7 @@ a {
 
 /*Estilo imagenes rutaespecifica.ejs*/
 .imagenes{
-    display: flex; /* Para alinear las imágenes en una fila */
+    display: flex;
     justify-content: center; /* Centrar las imágenes */
     gap: 20px; /* Espacio entre imágenes */
     margin-top: 20px;
@@ -198,7 +199,7 @@ a {
 .titulorutas{
   text-align: center; /* Centra el título */
   font-size: 3rem; /* Hace el título más grande */
-  margin-top: -30px; /* Un poco de espacio arriba */;
+  margin-top: -30px; 
 }
 
 .leaflet-bottom.leaflet-right .leaflet-control {
@@ -207,6 +208,7 @@ a {
   align-items: center;
   gap: 5px; /* separación entre botones */
 }
+/* Boton de pantalla completa en el mapa */
 .leaflet-control-zoom,
 .leaflet-control-fullscreen {
   margin-bottom: 0 !important; /* elimina el espacio vertical */
@@ -222,6 +224,7 @@ a {
   margin-bottom: 1rem;
   border-radius: 8px;
 }
+/* Imagen de fondo en la pagina de iniciosesion y registro */
 .background-login{
   position: fixed; 
   top: 0;
@@ -319,24 +322,6 @@ a {
   background-color: #eaeaea;
 }
 
-.titulo-guadaway {
-  text-align: center;
-  color: rgb(4, 111, 15);
-  padding: 50px 25px 45px;
-}
-
-.titulo-guadaway h1 {
-  font-size: 3em;
-  margin: 0;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-}
-
-.titulo-guadaway h2 {
-  font-size: 1.4em;
-  margin-top: 10px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-}
-
 
 
 .scroll-btn {
@@ -352,9 +337,10 @@ a {
 .scroll-btn:hover {
   background-color: #5a6268;
 }
+/* Estilos de inagen de bienvenida en pagina principal */
 .hero {
   position: relative;
-  inset: 0; /* Pegarse a todos los bordes posibles */
+  inset: 0;
   width: 100vw;
   height: 100vh;
   background-image: url('/images/foto_iniciosesion.jpg');
@@ -364,7 +350,7 @@ a {
   overflow: hidden;
 }
 
-/* Capa oscura encima de la imagen */
+/* Capa oscura encima de la imagene en pagina principa imagen de bienvenida */
 .hero .overlay {
   position: absolute;
   top: 0;
@@ -377,7 +363,7 @@ a {
 
 
 
- /* Asegura que el contenedor de usuario tenga posición relativa */
+
   #user-widget {
     position: fixed;
     top: 20px;
@@ -385,7 +371,7 @@ a {
     z-index: 1000;
   }
 
-  /* Asegura que el dropdown se posicione correctamente */
+  /* Estilos de desplegable de usuarios modificado en preguntas frecuentes */
   #user-widget .dropdown-content {
     right: 0;
     width: 500px;
@@ -396,10 +382,12 @@ a {
     display: none;
   }
 
-  /* Cuando esté abierto, se mostrará */
+  /* Cuando se abre el dropdown se mostrará*/
   #user-widget .dropdown-content.active {
     display: block;
   }
+
+
   .form-group select,
   .form-group button {
     font-size: 1.2rem; /* Aumenta el tamaño de la fuente */

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const puntoSchema = new mongoose.Schema({
+const puntoSchema = new mongoose.Schema({ //Se crea un nuevo esquema para un documento en mongoose
   type: {
     type: String,
     enum: ['FeatureCollection'],
@@ -22,7 +22,7 @@ const puntoSchema = new mongoose.Schema({
           required: true
         },
         coordinates: {
-          type: [Number], // [lon, lat]
+          type: [Number], // Coordenadas en latitud y longitud
           required: true
         }
       },
@@ -38,5 +38,5 @@ const puntoSchema = new mongoose.Schema({
     }
   ]
 });
-const entradas = mongoose.model('entradas', puntoSchema);
+const entradas = mongoose.model('entradas', puntoSchema); //Crea un modelo llamado entradas basado en el esquema puntoSchema
 module.exports =  entradas;

@@ -11,7 +11,7 @@ router.get('/geojson', async (req, res) => {
       type: "FeatureCollection",
       features: rutas.map(ruta => ({
         type: "Feature",
-        _id: ruta._id,  // ID de la ruta
+        _id: ruta._id,
         properties: {
           name: ruta.name,
           crs: ruta.crs || {},
@@ -43,12 +43,12 @@ router.get('/geojson', async (req, res) => {
   }
 });
 
-module.exports = router; // Exportamos el router para que app.js lo use
+module.exports = router;
 
-/*Rutas para el Ver mas información*/ 
+
 // Ruta para mostrar la página específica de la ruta
 
-//BIEN
+
 router.get('/rutaespecifica/:name', async (req, res) => {
   try {
     const rutaName = decodeURIComponent(req.params.name);
@@ -67,7 +67,7 @@ router.get('/rutaespecifica/:name', async (req, res) => {
   }
 });
 
-//BIEN
+
 router.get('/rutaespecifica', async (req, res) => {
   try {
     const rutaName = req.query.Buscar;  // Obtenemos el nombre de la ruta desde la query
@@ -122,7 +122,7 @@ router.get('/autocomplete', async (req, res) => {
       }
     });
 
-    res.json(resultado.slice(0, 5)); // También asegúrate de devolver solo 5 resultados
+    res.json(resultado.slice(0, 5)); // Asegura devolver solo 5 resultados
   } catch (error) {
     console.error("Error en /autocomplete:", error);
     res.status(500).send('Error al obtener las rutas');

@@ -17,7 +17,7 @@ const ThirdPartyProviderSchema = new mongoose.Schema({
     }
 })
 
-// Create Schema
+
 const UserSchema = new mongoose.Schema(
     {
         name: {
@@ -57,12 +57,12 @@ const UserSchema = new mongoose.Schema(
     { strict: false }
 );
 
-UserSchema.methods.generateHash = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+UserSchema.methods.generateHash = function (password) { //generateHash hace un Hash para almacenarla en la base de datos de forma segura
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); //Genera un valor aleatorio con un factor de 8 rondas
 };
 
 UserSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
-};
+}; // Se compara la contraseña y el Hash de la contraseña almacenada
 
 module.exports = User = mongoose.model("users", UserSchema);

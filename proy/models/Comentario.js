@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const comentarioSchema = new Schema({
+const comentarioSchema = new Schema({ //Se crea un nuevo esquema para un documento en mongoose
   rutaId: {
     type: Schema.Types.ObjectId,
     ref: 'Ruta',
@@ -20,4 +20,5 @@ const comentarioSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Comentario', comentarioSchema);
+module.exports = mongoose.model('Comentario', comentarioSchema); 
+//Crea un modelo llamado entradas basado en el esquema comentarioSchema y se exporta

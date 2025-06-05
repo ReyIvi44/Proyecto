@@ -25,7 +25,7 @@
 
     <div id ="contenido" style="position: relative; margin-top:-50px; z-index: 22; display: flex; flex-direction: row-reverse;right: 50px;"><% include pestañausuario %></div>
     <% if (user) { %>
-      <p id = "titulo-principal" style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 60px;">
+      <p id = "titulo-principal" style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 40px;">
         <strong><%= user.name %> <%= user.surname %></strong>
       </p>
       <% } else { %>
@@ -204,15 +204,15 @@
         const rutasLayerGroup = L.layerGroup().addTo(map);
         const puntosInteresLayerGroup = L.layerGroup().addTo(map);
         const baseMaps = {
-        "🗺️ OpenStreetMap": osm,
-        "🛰️ Satélite (Esri)": esriSat,
-        "openTopo": openTopo
+        "OpenStreetMap": osm,
+        "Satélite (Esri)": esriSat,
+        "OpenTopoMap": openTopo
         };
         controlCapas = L.control.layers(
         baseMaps,
         {
-          '🗺️ Rutas': rutasLayerGroup,
-          '📍 Puntos de interés': puntosInteresLayerGroup
+          'Rutas': rutasLayerGroup,
+          'Puntos de interés': puntosInteresLayerGroup
         },
         { collapsed: true
          } // Opcional: mostrar el panel abierto por defecto
@@ -253,7 +253,6 @@ function getEstiloYPopup() {
       tableHtml += generateTableRow('Dificultad', feature.properties['Dificultad']);
       tableHtml += generateTableRow('Duración (h)', feature.properties['Duración (h)']);
       tableHtml += generateTableRow('Longitud (km)', feature.properties['Longitud (km)']);
-      tableHtml += generateTableRow('Recomendaciones', feature.properties['Recomendaciones']);
 
       // Crear un enlace a la página de la ruta específica
       const rutaName = feature.properties['Nombre'];

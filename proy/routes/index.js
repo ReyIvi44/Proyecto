@@ -7,13 +7,13 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 
-/* GET home page. */
+// Renderiza una vita a partir de la plantilla index.ejs
 router.get('/', async(req, res, next) =>{
   res.render('index', { title: 'Guadaway', user: req.user});
 });
 
 
-  const Ruta = require('../models/ruta');  // Modelo de ruta
+  const Ruta = require('../models/ruta');
 
 // Esta en el index porque hace referencia a los datos de los popups de cada ruta en el mapa principal 
 router.get('/geojson', async (req, res) => {
@@ -25,12 +25,12 @@ router.get('/geojson', async (req, res) => {
   }
 });
 module.exports = router;
-
+// Se extraen los parametros enviados y se asignan a las variables para filtrar las rutas en la base de datos
 router.get('/filtrar-rutas', async (req, res) => {
   const { maxDuracion, minDuracion, maxDistancia, minDistancia, dificultad, sentido } = req.query;
 
-  const condiciones = {}; // esto está bien, es un objeto
-
+  const condiciones = {};
+  // Se comprueba si minduracion cprresponde al valor minimo de duracion de la ruta y maxduracion a valor maximo
   if (minDuracion && maxDuracion) {
     condiciones['properties.Duración (h)'] = {
       $gte: parseFloat(minDuracion),
@@ -43,13 +43,13 @@ router.get('/filtrar-rutas', async (req, res) => {
       $lte: parseFloat(maxDistancia)
     };
   }
-  if (dificultad) {
+  if (dificultad) { // Se verifica si se proporciona un valor para la dificultad y comprueba si el valor coincide con la ruta
     condiciones['properties.Dificultad'] = dificultad;
   }
   if (sentido) {
     condiciones['properties.Sentido'] = sentido;
   }
-  console.log('Condiciones de filtrado:', condiciones);
+  console.log('Condiciones de filtrado:', condiciones); //Se filtran y recuperan las rutas en la base de datos segun los criterios
     try {
     const rutas = await Ruta.find({
       features: {
@@ -71,7 +71,7 @@ const PuntoInteres = require('../models/entradas');
 
 router.get('/puntos-interes', async (req, res) => {
   try {
-    const data = await PuntoInteres.findOne(); // solo hay un FeatureCollection
+    const data = await PuntoInteres.findOne(); //Consulta a la base de datos y busca el primer documento en coincidir con los criteros
     res.json(data);
   } catch (error) {
     console.error('❌ Error al obtener puntos de interés:', error);
@@ -80,7 +80,7 @@ router.get('/puntos-interes', async (req, res) => {
 });
 
 module.exports = router;
-
+// Se encarga de finalizar la sesion del usuario
 router.get("/logout", (req, res) => {
   req.logout(function (err) {
       if (err) { return next(err); }
@@ -89,4 +89,3 @@ router.get("/logout", (req, res) => {
 });
 
 module.exports = router;
-

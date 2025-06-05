@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-// Esquema para las propiedades dentro de "features"
-const featureSchema = new mongoose.Schema({
+
+const featureSchema = new mongoose.Schema({ //Se crea un nuevo esquema para un documento en mongoose
   type: String,
-  properties: {
+  properties: { //En algunas de las propiedades el nombre incluye comillas ya que contienen espacios o caracteres especiales
     id: String,
     Name: String,
     description: String,
@@ -20,18 +20,18 @@ const featureSchema = new mongoose.Schema({
   },
   geometry: {
     type: { type: String },
-    coordinates: [Array] // Asumiendo que las coordenadas son un array de números
+    coordinates: [Array]
   }
 });
 
-// Esquema para la colección de "rutas"
+
 const rutaSchema = new mongoose.Schema({
   name: String, 
   type: { type: String },
   crs: Object, 
-  features: [featureSchema] // Asegúrate de que el array de features esté correctamente tipado
-}, { collection: 'rutas' }); // Nombre de la colección en MongoDB
+  features: [featureSchema] //Para cada documento rutaSchema, existe una propiedad llamada features con una estructura definida en featureShema
+}, { collection: 'rutas' }); //Indica que el modelo que se usará es la colección rutas
 
-// Modelo de Mongoose para la ruta
+
 const Ruta = mongoose.model('Ruta', rutaSchema);
 module.exports = Ruta;
