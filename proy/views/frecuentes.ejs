@@ -8,16 +8,16 @@
   <body id = "top" class= "preguntas-frecuentes" style="scroll-behavior: smooth;"><!--Incluimos id="top" que nos servira para referenciar el boton de "volver arriba" -->
     <div style="position: relative; z-index: 20;">
     <!-- Contenedor fijo y alineado a la derecha para la imagen y el dropdown -->
-    <div id="user-widget" style="position: fixed; top: 20px; right: 50px; z-index: 1000;"> <!--Incluimos position:fixed para mantener el icono en la posicion a pesar de scrollear-->
+    <div id="user-widget" style="position: fixed; top: 30px; right: 50px; z-index: 21;"> <!--Incluimos position:fixed para mantener el icono en la posicion a pesar de scrollear-->
         <% include pestañausuario %>
     </div>
 
     <% if (user) { %>
-        <p id="titulo-principal" style="top: 120px; right: 60px; position: fixed; z-index: 900;"><!--Incluimos position:fixed para mantener el icono en la posicion a pesar de scrollear-->
+        <p id="titulo-principal" style="top: 110px; right: 50px; position: fixed; z-index: 20;"><!--Incluimos position:fixed para mantener el icono en la posicion a pesar de scrollear-->
             <%= user.name %> <%= user.surname %>
         </p>
     <% } else { %>
-        <p style="top: 120px; right: 70px; position: fixed; z-index: 900;"><!--Incluimos position:fixed para mantener el icono en la posicion a pesar de scrollear-->
+        <p style="top: 110px; right: 70px; position: fixed; z-index: 21;"><!--Incluimos position:fixed para mantener el icono en la posicion a pesar de scrollear-->
             <strong>Invitado</strong>
         </p>
     <% } %>

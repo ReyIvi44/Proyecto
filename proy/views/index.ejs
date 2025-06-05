@@ -25,13 +25,13 @@
 
     <div id ="contenido" style="position: relative; margin-top:-50px; z-index: 22; display: flex; flex-direction: row-reverse;right: 50px;"><% include pestañausuario %></div>
     <% if (user) { %> <!-- Si el usuario esta iniciado, se muestra el nombre y el apellido bajo la imagen de usuario-->
-      <p id = "titulo-principal" style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 40px;">
+      <p id="titulo-principal" style="text-align: right; position: relative; z-index: 21; margin-right: 45px;">
         <strong><%= user.name %> <%= user.surname %></strong>
       </p>
       <% } else { %> <!-- Si el usuario no esta iniciado, bajo la imagen marca invitado-->
-        <p style="display:flex; position:relative; flex-direction: row-reverse; z-index: 21;right: 68px;">
+        <p style="text-align: right; position: relative; z-index: 21; margin-right: 70px;">
         <strong>Invitado</strong>
-        </p>
+      </p>
       <% } %>
     
 
